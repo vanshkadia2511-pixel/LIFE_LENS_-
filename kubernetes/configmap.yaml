@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: lifelens-config
+  namespace: lifelens
+data:
+  environment: production
+  log_level: "INFO"
+  database_pool_size: "20"
+  database_max_overflow: "40"
