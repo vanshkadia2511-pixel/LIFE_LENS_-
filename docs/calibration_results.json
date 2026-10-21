@@ -1,0 +1,42 @@
+{
+  "job_scam": {
+    "val": {
+      "uncalibrated_ece": 0.0252,
+      "calibrated_ece": 0.0052
+    },
+    "test": {
+      "uncalibrated_ece": 0.0281,
+      "calibrated_ece": 0.0082
+    }
+  },
+  "sentinel_binary_fraud": {
+    "val": {
+      "uncalibrated_ece": 0.0675,
+      "calibrated_ece": 0.011
+    },
+    "test": {
+      "uncalibrated_ece": 0.0607,
+      "calibrated_ece": 0.0041
+    }
+  },
+  "url_char_ngram": {
+    "val": {
+      "uncalibrated_ece": 0.059,
+      "calibrated_ece": 0.0324
+    },
+    "test": {
+      "uncalibrated_ece": 0.0484,
+      "calibrated_ece": 0.0206
+    }
+  },
+  "url_tabular": {
+    "val": {
+      "uncalibrated_ece": 0.0128,
+      "calibrated_ece": 0.0162
+    },
+    "test": {
+      "uncalibrated_ece": 0.0086,
+      "calibrated_ece": 0.0132
+    }
+  }
+}

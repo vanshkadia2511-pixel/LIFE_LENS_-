@@ -1,0 +1,68 @@
+﻿
+============================================================
+  LIFELENS ╬⌐ ΓÇö DATASET QUALITY AUDIT REPORT
+============================================================
+  Train file : datasets\job_scam_text\indian_scam_multiclass\sentinel_dataset_multiclass.csv
+  Test file  : datasets\job_scam_text\indian_scam_multiclass\sentinel_dataset_multiclass.csv
+  Text col   : text
+  Label col  : category_name
+
+============================================================
+  AUDITING SPLIT: TRAIN  (14,000 rows)
+============================================================
+  [OK]  Row count: 14,000
+  [OK]  Columns present: 'text', 'category_name'
+  [OK]  Missing text: 0 (0.00%)
+  [OK]  Missing labels: 0 (0.00%)
+  [INFO] Clean rows after dropping missing: 14,000
+
+  Label distribution:
+    bank_phishing: 1,875  (13.4%)
+    financial_fraud: 3,080  (22.0%)
+    government_impersonation: 2,905  (20.8%)
+    legit: 5,600  (40.0%)
+    romance_parcel_sextortion: 540  (3.9%)
+  [OK]  Class balance: majority = 40.0%
+  [OK]  Duplicate rows: 0 (0.00%)
+
+  Text length stats:
+    min=110  median=172  mean=172  max=257
+  [OK]  Very short texts (<5 chars): 0 (0.00%)
+
+  Flags (1):
+  ΓÜá∩╕Å  [WARNING] More than 2 unique label values found: {'romance_parcel_sextortion', 'bank_phishing', 'legit', 'government_impersonation', 'financial_fraud'}. Expected binary classification.
+
+============================================================
+  AUDITING SPLIT: TEST  (14,000 rows)
+============================================================
+  [OK]  Row count: 14,000
+  [OK]  Columns present: 'text', 'category_name'
+  [OK]  Missing text: 0 (0.00%)
+  [OK]  Missing labels: 0 (0.00%)
+  [INFO] Clean rows after dropping missing: 14,000
+
+  Label distribution:
+    bank_phishing: 1,875  (13.4%)
+    financial_fraud: 3,080  (22.0%)
+    government_impersonation: 2,905  (20.8%)
+    legit: 5,600  (40.0%)
+    romance_parcel_sextortion: 540  (3.9%)
+  [OK]  Class balance: majority = 40.0%
+  [OK]  Duplicate rows: 0 (0.00%)
+
+  Text length stats:
+    min=110  median=172  mean=172  max=257
+  [OK]  Very short texts (<5 chars): 0 (0.00%)
+
+  Flags (1):
+  ΓÜá∩╕Å  [WARNING] More than 2 unique label values found: {'romance_parcel_sextortion', 'bank_phishing', 'legit', 'government_impersonation', 'financial_fraud'}. Expected binary classification.
+
+============================================================
+  AUDIT VERDICT
+============================================================
+  SEVERE   : 0
+  WARNING  : 2
+  INFO     : 0
+
+  Γ£à RESULT: NO SEVERE FLAGS ΓÇö Safe to proceed with training.
+     ΓÜá∩╕Å  Warnings present ΓÇö review above before training.

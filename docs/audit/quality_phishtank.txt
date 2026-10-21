@@ -1,0 +1,64 @@
+﻿
+============================================================
+  LIFELENS ╬⌐ ΓÇö DATASET QUALITY AUDIT REPORT
+============================================================
+  Train file : datasets\phishing_urls\phishtank\online-valid.csv
+  Test file  : datasets\phishing_urls\phishtank\online-valid.csv
+  Text col   : url
+  Label col  : verified
+
+============================================================
+  AUDITING SPLIT: TRAIN  (77,204 rows)
+============================================================
+  [OK]  Row count: 77,204
+  [OK]  Columns present: 'url', 'verified'
+  [OK]  Missing text: 0 (0.00%)
+  [OK]  Missing labels: 0 (0.00%)
+  [INFO] Clean rows after dropping missing: 77,204
+
+  Label distribution:
+    yes: 77,204  (100.0%)
+  [OK]  Duplicate rows: 3 (0.00%)
+
+  Text length stats:
+    min=12  median=39  mean=56  max=25523
+  [OK]  Very short texts (<5 chars): 0 (0.00%)
+
+  Flags (4):
+  ≡ƒÜ¿ [SEVERE] Severe class imbalance: majority class = 100.0%. Model will be strongly biased. Consider resampling or class weighting.
+  ≡ƒÜ¿ [SEVERE] Only one unique label value: {'yes'}. Cannot train a classifier.
+  Γä╣∩╕Å  [INFO] Sample contains 3 email-like patterns. Review for PII before sharing.
+  Γä╣∩╕Å  [INFO] Sample contains 8 phone-number-like patterns. Review for PII before sharing.
+
+============================================================
+  AUDITING SPLIT: TEST  (77,204 rows)
+============================================================
+  [OK]  Row count: 77,204
+  [OK]  Columns present: 'url', 'verified'
+  [OK]  Missing text: 0 (0.00%)
+  [OK]  Missing labels: 0 (0.00%)
+  [INFO] Clean rows after dropping missing: 77,204
+
+  Label distribution:
+    yes: 77,204  (100.0%)
+  [OK]  Duplicate rows: 3 (0.00%)
+
+  Text length stats:
+    min=12  median=39  mean=56  max=25523
+  [OK]  Very short texts (<5 chars): 0 (0.00%)
+
+  Flags (4):
+  ≡ƒÜ¿ [SEVERE] Severe class imbalance: majority class = 100.0%. Model will be strongly biased. Consider resampling or class weighting.
+  ≡ƒÜ¿ [SEVERE] Only one unique label value: {'yes'}. Cannot train a classifier.
+  Γä╣∩╕Å  [INFO] Sample contains 3 email-like patterns. Review for PII before sharing.
+  Γä╣∩╕Å  [INFO] Sample contains 8 phone-number-like patterns. Review for PII before sharing.
+
+============================================================
+  AUDIT VERDICT
+============================================================
+  SEVERE   : 4
+  WARNING  : 0
+  INFO     : 4
+
+  ≡ƒÜ¿ RESULT: SEVERE FLAGS RAISED ΓÇö DO NOT PROCEED WITH TRAINING
+     Review the flags above and resolve them first.

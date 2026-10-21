@@ -1,0 +1,38 @@
+﻿============================= test session starts =============================
+platform win32 -- Python 3.12.13, pytest-7.4.3, pluggy-1.6.0
+rootdir: D:\Life_Lens_Ai
+configfile: pyproject.toml
+testpaths: tests, apps/api/tests
+plugins: anyio-3.7.1, platformdirs-4.13.0, asyncio-0.21.1, cov-4.1.0
+asyncio: mode=Mode.AUTO
+collected 273 items
+
+tests\test_api_endpoints.py .......                                      [  2%]
+tests\test_engine.py .........................                           [ 11%]
+tests\test_evaluation_benchmarks.py ....                                 [ 13%]
+tests\test_mock_simulation_zero_weight.py ......                         [ 15%]
+tests\test_phase2_community_and_trajectory.py .......................... [ 24%]
+..................                                                       [ 31%]
+tests\test_phase2_trust_graph_and_security.py ....                       [ 32%]
+tests\test_phase3_media_and_quality.py .............................     [ 43%]
+tests\test_phase6_recovery_automation.py ...........                     [ 47%]
+tests\test_phase7_enterprise_and_sdk.py ...........                      [ 51%]
+tests\test_phase8_industrialization_and_observability.py .........       [ 54%]
+tests\test_phase_b_call_guard_layer0.py ...........                      [ 58%]
+tests\test_phase_c_desktop_call_guard.py .......                         [ 61%]
+tests\test_phase_d_platform_integrations.py ........                     [ 64%]
+tests\test_phase_e_media_forensics.py ......                             [ 66%]
+tests\test_phase_g_detectors.py ...........                              [ 70%]
+tests\test_phase_h_distribution.py ..........                            [ 74%]
+tests\test_phase_i_response.py .....                                     [ 76%]
+tests\test_phase_j_governance.py ......                                  [ 78%]
+tests\test_phase_k_engineering.py .......                                [ 80%]
+tests\test_phase_l_pilot_readiness.py ......                             [ 83%]
+tests\test_phases4_5_unified_platform.py .........                       [ 86%]
+tests\test_regression_suite.py .....                                     [ 88%]
+tests\test_rule_b_media_cap.py ....                                      [ 89%]
+apps\api\tests\test_circuit_breaker.py ........                          [ 92%]
+apps\api\tests\test_phase1_security_and_agencies.py .........            [ 95%]
+apps\api\tests\test_verification_pipeline.py ...........                 [100%]
+
+============================ 273 passed in 42.01s =============================

@@ -1,0 +1,61 @@
+﻿
+============================================================
+  LIFELENS ╬⌐ ΓÇö DATASET QUALITY AUDIT REPORT
+============================================================
+  Train file : datasets\phishing_urls\compphish\all_features_threshold90.csv
+  Test file  : datasets\phishing_urls\compphish\all_features_threshold90.csv
+  Text col   : url
+  Label col  : label
+
+============================================================
+  AUDITING SPLIT: TRAIN  (15,358 rows)
+============================================================
+  [OK]  Row count: 15,358
+  [OK]  Columns present: 'url', 'label'
+  [OK]  Missing text: 0 (0.00%)
+  [OK]  Missing labels: 0 (0.00%)
+  [INFO] Clean rows after dropping missing: 15,358
+
+  Label distribution:
+    0: 8,154  (53.1%)
+    1: 7,204  (46.9%)
+  [OK]  Class balance: majority = 53.1%
+  [OK]  Duplicate rows: 7 (0.05%)
+
+  Text length stats:
+    min=13  median=29  mean=40  max=6310
+  [OK]  Very short texts (<5 chars): 0 (0.00%)
+  [OK]  Label values: {'0', '1'}
+
+  Γ£à  No flags raised.
+
+============================================================
+  AUDITING SPLIT: TEST  (15,358 rows)
+============================================================
+  [OK]  Row count: 15,358
+  [OK]  Columns present: 'url', 'label'
+  [OK]  Missing text: 0 (0.00%)
+  [OK]  Missing labels: 0 (0.00%)
+  [INFO] Clean rows after dropping missing: 15,358
+
+  Label distribution:
+    0: 8,154  (53.1%)
+    1: 7,204  (46.9%)
+  [OK]  Class balance: majority = 53.1%
+  [OK]  Duplicate rows: 7 (0.05%)
+
+  Text length stats:
+    min=13  median=29  mean=40  max=6310
+  [OK]  Very short texts (<5 chars): 0 (0.00%)
+  [OK]  Label values: {'0', '1'}
+
+  Γ£à  No flags raised.
+
+============================================================
+  AUDIT VERDICT
+============================================================
+  SEVERE   : 0
+  WARNING  : 0
+  INFO     : 0
+
+  Γ£à RESULT: NO SEVERE FLAGS ΓÇö Safe to proceed with training.

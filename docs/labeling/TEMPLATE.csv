@@ -1,0 +1,4 @@
+sample_id,timestamp_utc,source_channel,content_type,content_payload,claimed_entity,claimed_country,rater1_label,rater1_notes,rater2_label,rater2_notes,adjudicated_label,category
+SAMPLE-0001,2026-10-13T12:00:00Z,email,text,"Example recruiter message text goes here",Example Corp,GB,,,,,,
+SAMPLE-0002,2026-10-13T12:05:00Z,sms,text,"Example bank KYC alert goes here",Example Bank,IN,,,,,,
+SAMPLE-0003,2026-10-13T12:10:00Z,whatsapp,url,"https://example-phish-domain.com/login",Unknown,US,,,,,,
