@@ -89,3 +89,11 @@ datasets/company_registry_reference/
 *.bin
 *.onnx
 models/**/*.joblib
+
+# Next.js
+node_modules/
+.next/
+next-env.d.ts
+*.tsbuildinfo
+.env*.local
+!/lib/

@@ -1,0 +1,140 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --background: #eef3fc;
+  --background-2: #e4ecfa;
+  --foreground: #0b1530;
+  --muted: #e6edf9;
+  --muted-foreground: #52607d;
+  --card: rgba(255, 255, 255, 0.78);
+  --card-solid: #ffffff;
+  --card-foreground: #0b1530;
+  --border: rgba(59, 108, 246, 0.22);
+  --border-strong: rgba(59, 108, 246, 0.45);
+  --primary: #4f5dff;
+  --primary-2: #8b5cf6;
+  --primary-foreground: #ffffff;
+  --accent: #0ea5e9;
+  --success: #059669;
+  --warning: #d97706;
+  --danger: #dc2626;
+  --neutral: #64748b;
+  --glow: rgba(79, 93, 255, 0.18);
+  --input: rgba(255, 255, 255, 0.9);
+  --ring: #4f5dff;
+  --font-scale: 1;
+}
+
+.dark {
+  --background: #040a1d;
+  --background-2: #071232;
+  --foreground: #eef3ff;
+  --muted: #0d1838;
+  --muted-foreground: #93a3c7;
+  --card: rgba(10, 21, 52, 0.62);
+  --card-solid: #0a1534;
+  --card-foreground: #eef3ff;
+  --border: rgba(56, 132, 255, 0.28);
+  --border-strong: rgba(76, 160, 255, 0.6);
+  --primary: #5b6cff;
+  --primary-2: #8b5cf6;
+  --primary-foreground: #ffffff;
+  --accent: #22d3ee;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --neutral: #64748b;
+  --glow: rgba(70, 120, 255, 0.35);
+  --input: rgba(6, 14, 38, 0.75);
+  --ring: #5b9bff;
+}
+
+[data-accent='cyan'] { --primary: #0891b2; --primary-2: #22d3ee; --ring: #22d3ee; }
+[data-accent='emerald'] { --primary: #059669; --primary-2: #10b981; --ring: #10b981; }
+[data-accent='amber'] { --primary: #d97706; --primary-2: #f59e0b; --ring: #f59e0b; }
+[data-accent='rose'] { --primary: #e11d48; --primary-2: #f43f5e; --ring: #f43f5e; }
+[data-accent='violet'] { --primary: #7c3aed; --primary-2: #a855f7; --ring: #a855f7; }
+
+[data-text-size='sm'] { --font-scale: 0.92; }
+[data-text-size='lg'] { --font-scale: 1.1; }
+
+@theme inline {
+  --color-background: var(--background);
+  --color-background-2: var(--background-2);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-card: var(--card);
+  --color-card-solid: var(--card-solid);
+  --color-card-foreground: var(--card-foreground);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-primary: var(--primary);
+  --color-primary-2: var(--primary-2);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-accent: var(--accent);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+  --color-neutral: var(--neutral);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-display-serif), ui-serif, Georgia, serif;
+}
+
+@layer base {
+  * { border-color: var(--border); }
+  html { font-size: calc(16px * var(--font-scale)); }
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background: color-mix(in oklab, var(--primary) 40%, transparent); }
+}
+
+@utility glass {
+  background: var(--card);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border: 1px solid var(--border);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.02) inset, 0 10px 40px -12px var(--glow);
+}
+
+@utility glow-border {
+  border: 1px solid var(--border-strong);
+  box-shadow: 0 0 24px -6px var(--glow), 0 0 0 1px rgba(120, 170, 255, 0.06) inset;
+}
+
+@utility bg-brand-gradient {
+  background-image: linear-gradient(90deg, var(--primary) 0%, var(--primary-2) 100%);
+}
+
+@utility text-brand-gradient {
+  background-image: linear-gradient(90deg, #8fd8ff 0%, #4fa8ff 45%, #22d3ee 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility app-backdrop {
+  background:
+    radial-gradient(1200px 600px at 80% -10%, color-mix(in oklab, var(--primary) 22%, transparent), transparent 60%),
+    radial-gradient(900px 500px at -10% 30%, color-mix(in oklab, var(--primary-2) 14%, transparent), transparent 60%),
+    linear-gradient(180deg, var(--background) 0%, var(--background-2) 100%);
+}
+
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
