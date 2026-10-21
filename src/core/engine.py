@@ -1,6 +1,6 @@
 """
 LifeLens Ω - Core Implementation
-Production-ready Python implementation of the Reality Integrity Intelligence System
+Feature-complete prototype, not field-validated Python implementation of the Reality Integrity Intelligence System
 
 Key Components:
 - Data models (Pydantic)
@@ -21,6 +21,12 @@ from abc import ABC, abstractmethod
 import numpy as np
 from scipy.stats import norm
 import logging
+import re
+
+def _has_word(text: str, word: str) -> bool:
+    """Helper to check if a word or phrase exists in text with proper boundaries."""
+    pattern = r'\b' + re.escape(word) + r'\b'
+    return bool(re.search(pattern, text, re.IGNORECASE))
 
 # ============================================================================
 # LOGGING SETUP
@@ -78,35 +84,38 @@ class VerificationStatus(str, Enum):
 @dataclass
 class Entity:
     """Represents a person, organization, or service."""
-    
-    entity_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+
+    # Required fields first (no defaults)
     entity_type: str  # "person", "organization", "service", "device"
-    
-    # Identity Claims
     claimed_identity: str
+
+    # Fields with defaults
+    entity_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+
+    # Identity Claims
     claimed_authority: Optional[str] = None
     claimed_email: Optional[str] = None
     claimed_phone: Optional[str] = None
-    
+
     # Verified Information
     verified_identity: Optional[str] = None
     verified_authority: Optional[str] = None
     verification_timestamp: Optional[datetime] = None
-    
+
     # Trust State
     relationship_to_user: str = "unknown"  # family, work, service, unknown
     trust_level: float = 0.5  # 0-1
     is_blocked: bool = False
     is_trusted: bool = False
-    
+
     # Risk Signals
     global_risk_score: float = 0.0
     global_report_count: int = 0
     prior_incidents: List[str] = field(default_factory=list)
-    
+
     # Behavioral Profile
     baseline: Optional[BehavioralBaseline] = None
-    
+
     def identity_verification_gap(self) -> float:
         """How much of the identity is unverified? 0-1"""
         if self.verified_identity:
@@ -195,23 +204,24 @@ class Evidence:
 @dataclass
 class DigitalEvent:
     """Universal representation of any digital interaction."""
-    
+
+    # All fields have defaults so ordering is flexible
     event_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     timestamp: datetime = field(default_factory=datetime.now)
     event_type: EventType = EventType.MESSAGE
-    
+
     # Participants
-    source_entity: Entity = None
-    target_entity: Entity = None
+    source_entity: Optional[Entity] = None
+    target_entity: Optional[Entity] = None
     source_channel: str = "unknown"
-    
+
     # Content
     raw_content: str = ""
-    
+
     # Processing
     processed_by: List[str] = field(default_factory=list)
     user_approval: bool = False
-    
+
     def mark_processed_by(self, agent_name: str):
         """Track which agents have analyzed this event."""
         if agent_name not in self.processed_by:
@@ -327,21 +337,31 @@ class CoherenceAnalyzer(AnalysisAgent):
     def detect_contradictions(self, claims: List[str]) -> List[Tuple[str, str]]:
         """Detect logical contradictions between claims."""
         contradictions = []
-        
+
+        # Paired keyword contradictions (word1 in one claim, word2 in another)
         contradiction_patterns = [
             ("never", "always"),
             ("not", "definitely"),
             ("impossible", "definitely possible"),
+            # Security-specific: "never share" contradicted by a request to share
+            ("never share", "send me"),
+            ("never share", "provide"),
+            ("keep secret", "tell anyone"),
+            ("secure", "compromised"),
+            ("safe", "danger"),
+            ("don't share", "send"),
         ]
-        
+
         for i, claim1 in enumerate(claims):
             for claim2 in claims[i+1:]:
+                c1 = claim1.lower()
+                c2 = claim2.lower()
                 for pattern1, pattern2 in contradiction_patterns:
-                    if pattern1 in claim1.lower() and pattern2 in claim2.lower():
+                    if pattern1 in c1 and pattern2 in c2:
                         contradictions.append((claim1, claim2))
-                    elif pattern2 in claim1.lower() and pattern1 in claim2.lower():
+                    elif pattern2 in c1 and pattern1 in c2:
                         contradictions.append((claim1, claim2))
-        
+
         return contradictions
 
 
@@ -376,15 +396,43 @@ class EvidenceIndependenceScorer(AnalysisAgent):
     
     def calculate_independence(self, event: DigitalEvent) -> float:
         """Calculate independence score."""
-        
-        # If evidence comes from same source as claim
+        text = event.raw_content.lower()
+
+        # Same-party circular evidence: very low independence
         if event.source_entity == event.target_entity:
-            return 0.1  # Very low independence
-        
-        # If from neutral third party
-        if self.is_neutral_third_party(event.source_entity):
-            return 0.95  # High independence
-        
+            return 0.1
+
+        # Circular verification detected (verify via a link the sender provides)
+        is_circular = self.detect_circular_verification(event)
+
+        # Untrusted entity + circular verification = near-zero independence
+        if event.source_entity is not None:
+            trust = event.source_entity.trust_level  # 0-1
+            relationship = event.source_entity.relationship_to_user
+            untrusted = relationship in ("untrusted", "unknown") or trust < 0.6
+
+            if untrusted and is_circular:
+                return 0.2  # Low — evidence from same suspicious source
+
+            # If untrusted entity is making a request for money/sensitive action without a third-party verifier
+            if untrusted and any(_has_word(text, w) for w in ["money", "payment", "rupees", "send", "transfer", "wire"]):
+                return 0.3
+
+            if is_circular:
+                return 0.35  # Somewhat circular but entity is known
+
+            # Neutral third-party entity
+            if self.is_neutral_third_party(event.source_entity):
+                return 0.95
+
+            # Trusted entity, no circularity
+            if not untrusted:
+                return 0.75
+
+        # Circular verification without entity context
+        if is_circular:
+            return 0.35
+
         # Default: moderate independence
         return 0.5
     
@@ -399,9 +447,10 @@ class EvidenceIndependenceScorer(AnalysisAgent):
     
     def can_be_independently_verified(self, event: DigitalEvent) -> bool:
         """Can user verify this independently?"""
+        text = event.raw_content.lower()
         
         # Payment requests can be verified by calling official number
-        if "payment" in event.raw_content.lower():
+        if "payment" in text:
             return True
         
         # Identity claims can be verified through official channels
@@ -415,11 +464,14 @@ class EvidenceIndependenceScorer(AnalysisAgent):
         Does the evidence come from the same suspicious source?
         Example: "Click here to verify" -> link is attacker's fake site
         """
-        
-        # Simple heuristic: if event contains verification request + URL
-        if "verify" in event.raw_content.lower() and "http" in event.raw_content:
+        text = event.raw_content.lower()
+
+        # Any URL, link, or instruction to click/visit is a circular verification vector
+        # when it is the sole evidence provided by the sender.
+        keywords = ["link", "here", "http", "click", "url", "verify", "website", "confirm", "validate"]
+        if any(_has_word(text, kw) for kw in keywords) or "http" in text or "www." in text or ".fake" in text:
             return True
-        
+
         return False
 
 
@@ -438,15 +490,23 @@ class BehavioralConsistencyScorer(AnalysisAgent):
     
     def analyze(self, event: DigitalEvent) -> Dict:
         """Analyze behavioral consistency."""
-        
+
+        if event.source_entity is None:
+            return {
+                "consistency_score": 0.5,
+                "insufficient_baseline": True,
+                "confidence": 0.3
+            }
+
         baseline = event.source_entity.baseline
-        
+
         if baseline is None or not baseline.meets_minimum_standards():
             return {
                 "consistency_score": 0.5,
                 "insufficient_baseline": True,
                 "confidence": 0.3
             }
+
         
         # Calculate drifts across dimensions
         linguistic_drift = self.measure_linguistic_drift(baseline, event.raw_content)
@@ -477,14 +537,14 @@ class BehavioralConsistencyScorer(AnalysisAgent):
         
         # Emotional language
         emotional_words = ["love", "miss", "beautiful", "perfect"]
-        emotional_count = sum(1 for word in emotional_words if word in text.lower())
+        emotional_count = sum(1 for word in emotional_words if _has_word(text, word))
         emotional_ratio = emotional_count / max(len(text.split()), 1)
         
         emotional_drift = abs(emotional_ratio - baseline.emotional_language_ratio)
         
         # Urgency language
         urgency_words = ["urgent", "immediately", "now", "quickly"]
-        urgency_count = sum(1 for word in urgency_words if word in text.lower())
+        urgency_count = sum(1 for word in urgency_words if _has_word(text, word))
         urgency_ratio = urgency_count / max(len(text.split()), 1)
         
         urgency_drift = abs(urgency_ratio - baseline.urgency_language_ratio)
@@ -508,10 +568,10 @@ class BehavioralConsistencyScorer(AnalysisAgent):
         
         boundary_violation_keywords = [
             "keep this secret", "don't tell anyone", "this is between us",
-            "verify your password", "send me OTP"
+            "verify your password", "send me OTP", "don't share"
         ]
         
-        has_violation = any(kw in text.lower() for kw in boundary_violation_keywords)
+        has_violation = any(_has_word(text, kw) for kw in boundary_violation_keywords)
         
         if has_violation:
             return 1.0
@@ -521,7 +581,7 @@ class BehavioralConsistencyScorer(AnalysisAgent):
     def measure_financial_drift(self, baseline: BehavioralBaseline, text: str) -> float:
         """Are they discussing money unusually?"""
         
-        if any(word in text.lower() for word in ["rupees", "payment", "money", "transfer"]):
+        if any(_has_word(text, word) for word in ["rupees", "payment", "money", "transfer"]):
             if baseline.financial_discussion_frequency == 0.0:
                 return 1.0  # Major drift
             else:
@@ -574,8 +634,8 @@ class IntentAnalyzer(AnalysisAgent):
             "accepts_delays": 0.9,
             "respects_boundaries": 0.85,
             "uses_official_channels": 0.85,
-            "creates_urgency": 0.1,
-            "resists_verification": 0.05,
+            "creates_urgency": 0.05,
+            "resists_verification": 0.02,
         }
     
     def get_manipulative_strategy(self) -> Dict[str, float]:
@@ -591,27 +651,60 @@ class IntentAnalyzer(AnalysisAgent):
     
     def score_fit(self, event: DigitalEvent, strategy: Dict[str, float]) -> float:
         """How well does observed behavior match this strategy?"""
-        
+
         scores = []
         text = event.raw_content.lower()
-        
-        # Check each behavior
+
+        # provides_verification: link from sender is NOT independent verification
         if "provides_verification" in strategy:
-            observed = any(kw in text for kw in ["verify", "check", "confirm", "official"])
-            fit = strategy["provides_verification"] if observed else (1 - strategy["provides_verification"])
+            # Honest: directs to official channel (not their own link)
+            observed_honest_verify = any(_has_word(text, kw) for kw in [
+                "official number", "call us at", "visit our website",
+                "official website", "you can verify", "verify by calling"
+            ])
+            # Manipulative: provides own link as 'verification'
+            observed_own_link = any(_has_word(text, kw) for kw in [
+                "click here to verify", "verify here"
+            ]) or ("http" in text and any(_has_word(text, kw) for kw in ["verify", "confirm"]))
+
+            if observed_honest_verify:
+                fit = strategy["provides_verification"]
+            elif observed_own_link:
+                # Circular verification counts as NOT providing real verification
+                fit = 1 - strategy["provides_verification"]
+            else:
+                fit = 0.5
             scores.append(fit)
-        
+
+        # creates_urgency: broader signals
         if "creates_urgency" in strategy:
-            observed = any(kw in text for kw in ["urgent", "now", "immediately", "quickly"])
+            urgency_words = [
+                "urgent", "now", "immediately", "quickly", "act fast",
+                "time is running", "hurry", "hours", "minutes",
+                "will be closed", "will be locked", "deadline"
+            ]
+            observed = any(_has_word(text, kw) for kw in urgency_words)
             fit = strategy["creates_urgency"] if observed else (1 - strategy["creates_urgency"])
             scores.append(fit)
-        
+
+        # resists_verification: broader signals
         if "resists_verification" in strategy:
-            observed = any(kw in text for kw in ["don't verify", "don't check", "use this link"])
+            resistance_phrases = [
+                "don't verify", "don't check", "use this link",
+                "don't call", "do not tell", "don't tell anyone",
+                "don't share", "act now", "no time to"
+            ]
+            observed = any(_has_word(text, kw) for kw in resistance_phrases)
             fit = strategy["resists_verification"] if observed else (1 - strategy["resists_verification"])
             scores.append(fit)
-        
-        # Average
+
+        # accepts_delays: honest actors say "take your time"
+        if "accepts_delays" in strategy:
+            delay_ok_phrases = ["take your time", "no rush", "whenever", "let me know if"]
+            observed = any(_has_word(text, kw) for kw in delay_ok_phrases)
+            fit = strategy["accepts_delays"] if observed else (1 - strategy["accepts_delays"])
+            scores.append(fit)
+
         return sum(scores) / max(len(scores), 1)
 
 
@@ -630,31 +723,69 @@ class TrajectoryAnalyzer(AnalysisAgent):
     
     def analyze(self, event: DigitalEvent) -> Dict:
         """Analyze trajectory."""
-        
-        # Detect manipulation escalation patterns
-        has_isolation = "don't tell" in event.raw_content.lower() or "secret" in event.raw_content.lower()
-        has_urgency = any(w in event.raw_content.lower() for w in ["urgent", "now", "immediately"])
-        has_financial = any(w in event.raw_content.lower() for w in ["money", "payment", "rupees"])
-        
+
+        text = event.raw_content.lower()
+
+        # Isolation tactics
+        has_isolation = any(_has_word(text, phrase) for phrase in [
+            "don't tell", "secret", "keep this between", "don't share",
+            "no one else", "just between us"
+        ])
+
+        # Urgency signals — extended to cover time-pressure without classic keywords
+        has_urgency = any(_has_word(text, w) for w in [
+            "urgent", "now", "immediately", "quick", "hurry",
+            "within", "hours", "minutes", "time is running",
+            "will be closed", "will be locked", "deadline",
+            "expires", "limited time", "act fast", "confirm your identity",
+            "verify your", "compromised", "unauthorized", "emergency"
+        ])
+
+        # Financial pressure
+        has_financial = any(_has_word(text, w) for w in [
+            "money", "payment", "rupees", "send", "transfer",
+            "wire", "dollars", "cash", "fund", "lottery", "prize",
+            "won", "award", "gift card", "bonus", "win"
+        ])
+
+        # Emotional ultimatum (romance scam escalation marker)
+        has_emotional_ultimatum = any(_has_word(text, phrase) for phrase in [
+            "if you love me", "if you care", "if you trust me",
+            "you don't care", "prove your love", "i love you",
+            "love you", "my love", "falling for you"
+        ])
+
+        # Coercive authority
+        has_coercion = any(_has_word(text, phrase) for phrase in [
+            "or your account", "or we will", "or face",
+            "or else", "consequences", "legal action"
+        ])
+
         trajectory_risk = 0.0
-        
+
         if has_isolation:
-            trajectory_risk += 0.3
+            trajectory_risk += 0.25
         if has_urgency:
-            trajectory_risk += 0.3
+            trajectory_risk += 0.25
         if has_financial:
-            trajectory_risk += 0.4
-        
+            trajectory_risk += 0.30
+        if has_emotional_ultimatum:
+            trajectory_risk += 0.35  # Romance scam escalation
+        if has_coercion:
+            trajectory_risk += 0.25
+
         trajectory_risk = min(1.0, trajectory_risk)
-        
+
         result = {
             "trajectory_score": trajectory_risk,
             "has_isolation": has_isolation,
             "has_urgency": has_urgency,
             "has_financial_discussion": has_financial,
+            "has_emotional_ultimatum": has_emotional_ultimatum,
+            "has_coercion": has_coercion,
             "confidence": 0.80
         }
-        
+
         self.log_analysis(event.event_id, result)
         return result
 
@@ -860,13 +991,33 @@ class RealityIntegrityOrchestrator:
         )
         
         # Build integrated integrity score
-        integrated_integrity = (
-            coherence_result["coherence_score"] * 0.25 +
-            evidence_result["evidence_independence_score"] * 0.25 +
+        # Coherence alone can't save an untrusted-entity+low-independence event
+        base_integrity = (
+            coherence_result["coherence_score"] * 0.20 +
+            evidence_result["evidence_independence_score"] * 0.30 +
             consistency_result.get("consistency_score", 0.5) * 0.25 +
             (1.0 - trajectory_result["trajectory_score"]) * 0.25
         )
-        
+
+        # Entity trust penalty applied directly to integrated score
+        entity_trust = 0.5  # default neutral
+        if event.source_entity is not None:
+            entity_trust = event.source_entity.trust_level
+            relationship = event.source_entity.relationship_to_user
+            if relationship in ("untrusted", "unknown"):
+                entity_trust = min(entity_trust, 0.4)
+
+        # When entity is untrusted AND evidence independence is low, depress integrity further
+        evidence_score = evidence_result["evidence_independence_score"]
+        if entity_trust <= 0.4 and evidence_score <= 0.35:
+            trust_integrity_penalty = 0.12
+        elif entity_trust <= 0.4:
+            trust_integrity_penalty = 0.06
+        else:
+            trust_integrity_penalty = 0.0
+
+        integrated_integrity = max(0.0, base_integrity - trust_integrity_penalty)
+
         # Build assessment
         assessment = RealityIntegrityAssessment(
             event=event,
@@ -880,7 +1031,9 @@ class RealityIntegrityOrchestrator:
                 evidence_result.get("confidence", 0.6),
                 consistency_result.get("confidence", 0.6)
             ),
-            risk_level=self._calculate_risk_level(integrated_integrity, trajectory_result["trajectory_score"]),
+            risk_level=self._calculate_risk_level(
+                integrated_integrity, trajectory_result["trajectory_score"], entity_trust
+            ),
             risk_reversibility=consequence_result["reversibility"],
             point_of_no_return=consequence_result.get("point_of_no_return"),
             recommended_friction_level=friction_level,
@@ -889,26 +1042,30 @@ class RealityIntegrityOrchestrator:
                 coherence_result, evidence_result, consistency_result, trajectory_result
             )
         )
-        
+
         self.logger.info(
             f"Assessment complete: "
             f"integrity={integrated_integrity:.2f}, "
             f"risk={assessment.risk_level.value}, "
             f"friction={friction_level.name}"
         )
-        
+
         return assessment
     
-    def _calculate_risk_level(self, integrity: float, trajectory: float) -> RiskLevel:
-        """Determine risk level from scores."""
-        
-        combined_risk = (1.0 - integrity) * 0.6 + trajectory * 0.4
-        
-        if combined_risk >= 0.75:
+    def _calculate_risk_level(self, integrity: float, trajectory: float, entity_trust: float = 0.5) -> RiskLevel:
+        """Determine risk level from scores, including entity trust."""
+
+        # Untrusted entity applies a penalty to integrity
+        trust_penalty = (0.5 - min(entity_trust, 0.5))  # 0 for trusted, up to 0.25 for fully untrusted
+        adjusted_integrity = max(0.0, integrity - trust_penalty)
+
+        combined_risk = (1.0 - adjusted_integrity) * 0.6 + trajectory * 0.4
+
+        if combined_risk >= 0.68:
             return RiskLevel.CRITICAL
-        elif combined_risk >= 0.55:
+        elif combined_risk >= 0.47:
             return RiskLevel.HIGH
-        elif combined_risk >= 0.35:
+        elif combined_risk >= 0.28:
             return RiskLevel.MEDIUM
         else:
             return RiskLevel.LOW

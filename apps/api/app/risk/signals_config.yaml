@@ -1,0 +1,71 @@
+# LifeLens Ω — Risk Signals Configuration
+# Implementation Plan §16.1
+#
+# IMPORTANT: These values are INITIAL PROTOTYPE CONFIGURATION,
+# not validated statistical probabilities.
+# They must be evaluated and recalibrated using test data (§16.1).
+#
+# version: must be incremented on every change (§73)
+version: "0.1.0"
+
+signals:
+
+  company_not_found:
+    severity: high
+    default_weight: 0.25
+    description: "Company could not be found in the authoritative registry."
+    category: "COMPANY_IDENTITY"
+
+  official_domain_mismatch:
+    severity: medium
+    default_weight: 0.15
+    description: "Recruiter email domain does not match the organization's official domain."
+    category: "DOMAIN"
+
+  recruiter_unverified:
+    severity: medium
+    default_weight: 0.15
+    description: "Recruiter identity could not be independently verified."
+    category: "RECRUITER_IDENTITY"
+
+  upfront_payment_request:
+    severity: critical
+    default_weight: 0.30
+    description: "The interaction includes a request for upfront payment or fees."
+    category: "PAYMENT"
+
+  visa_claim_unverified:
+    severity: medium
+    default_weight: 0.10
+    description: "Visa sponsorship is claimed but could not be independently verified."
+    category: "VISA"
+
+  urgency_pressure:
+    severity: medium
+    default_weight: 0.05
+    description: "The interaction includes urgency or deadline pressure."
+    category: "TRAJECTORY"
+
+  sensitive_document_request:
+    severity: high
+    default_weight: 0.20
+    description: "The recruiter is requesting sensitive documents (passport, ID, bank details)."
+    category: "TRAJECTORY"
+
+  off_platform_move:
+    severity: medium
+    default_weight: 0.10
+    description: "Recruiter is asking to move the conversation off the official job platform."
+    category: "TRAJECTORY"
+
+  company_dissolved:
+    severity: high
+    default_weight: 0.25
+    description: "The company found in the registry has a dissolved/inactive status."
+    category: "COMPANY_IDENTITY"
+
+  no_experience_required:
+    severity: low
+    default_weight: 0.03
+    description: "Job claims no experience is required for a high-paying role."
+    category: "COHERENCE"

@@ -1,0 +1,26 @@
+{
+  "name": "LifeLens Ω — Reality Integrity & Call Guardian",
+  "short_name": "LifeLens Ω",
+  "description": "Pre-call link verification, reality integrity intelligence, and fraud prevention.",
+  "start_url": "/?mode=callguard",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#F7F5F0",
+  "theme_color": "#1B2A4A",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    }
+  ],
+  "share_target": {
+    "action": "/",
+    "method": "GET",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  }
+}

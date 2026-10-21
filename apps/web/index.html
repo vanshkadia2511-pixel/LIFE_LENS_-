@@ -1,0 +1,1644 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>LifeLens Ω — Trust Before You Commit | Real Evidence. Smarter Decisions.</title>
+<meta name="description" content="LifeLens Ω verifies job offers, recruiters, companies and meeting links with real evidence — company registries, domain history, ML fraud models. Trust before you commit.">
+<meta name="theme-color" content="#07090F">
+<link rel="manifest" href="/manifest.webmanifest">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+
+<!-- Styles -->
+<link rel="stylesheet" href="styles.css">
+
+<!-- Three.js for 3D hero -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.161.0/build/three.min.js" defer></script>
+<!-- Chart.js for dashboard charts -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
+</head>
+<body>
+
+<!-- Ambient Background -->
+<div class="ambient-layer" aria-hidden="true">
+  <div class="glow-orb glow-1"></div>
+  <div class="glow-orb glow-2"></div>
+  <div class="glow-orb glow-3"></div>
+</div>
+
+<!-- Toast Container -->
+<div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+<!-- ═══════════════════════════════════════════════
+     LANDING PAGE
+═══════════════════════════════════════════════ -->
+<div id="page-landing">
+
+  <!-- Landing Nav -->
+  <nav class="landing-nav" role="navigation" aria-label="Main navigation">
+    <a class="nav-logo" href="#" id="logoHome" aria-label="LifeLens Omega home">
+      <div class="nav-logo-icon" aria-hidden="true">⟁</div>
+      LifeLens Ω
+    </a>
+
+    <ul class="nav-links" role="list">
+      <li><a href="#" class="active">Home</a></li>
+      <li><a href="#features-section">Features</a></li>
+      <li><a href="#how-it-works">How It Works</a></li>
+      <li><a href="#" id="navVerification">Verification</a></li>
+      <li><a href="#about-section">About</a></li>
+    </ul>
+
+    <div class="nav-actions">
+      <div class="status-badge" id="serverStatus" title="API server connection status">
+        <span class="status-dot" id="statusDot"></span>
+        <span id="statusText">Connecting…</span>
+      </div>
+      <button class="btn-primary btn-sm" id="navStartVerify" aria-label="Start verification">Start Verification →</button>
+      <button class="nav-ham" id="navHam" aria-label="Open navigation menu" aria-expanded="false">☰</button>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero" id="hero-section" aria-label="Hero section">
+    <div class="hero-content anim-fade-up">
+      <div class="hero-eyebrow">Real Evidence · Smarter Decisions · Safer Futures</div>
+
+      <h1 class="hero-title">
+        Trust Before<br>
+        <span class="accent">You Commit.</span>
+      </h1>
+
+      <p class="hero-sub">
+        Check job offers, recruiters, companies and meeting links with real evidence — not just opinions.
+      </p>
+
+      <div class="hero-cta">
+        <button class="btn-primary" id="heroStartVerify">Start Verification →</button>
+        <button class="btn-ghost" id="heroExplore">Explore Platform</button>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-num" data-count="48" data-suffix="K+">0</div>
+          <div class="stat-label">Scans Analyzed</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num" data-count="330" data-suffix="M+">0</div>
+          <div class="stat-label">Data Points</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num" data-suffix="">1 in 7</div>
+          <div class="stat-label">Jobs Flagged</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num" data-suffix="">27–43%</div>
+          <div class="stat-label">False Positive Rate</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3D Visual -->
+    <div class="hero-visual" aria-hidden="true">
+      <canvas id="hero-canvas"></canvas>
+
+      <!-- Floating verification cards -->
+      <div class="floating-card fc-top" role="presentation">
+        <div class="fc-label">Job Offer</div>
+        <div class="fc-value"><span class="fc-dot fc-dot-green"></span> Verified</div>
+      </div>
+      <div class="floating-card fc-right" role="presentation">
+        <div class="fc-label">Recruiter</div>
+        <div class="fc-value"><span class="fc-dot fc-dot-blue"></span> Verified</div>
+      </div>
+      <div class="floating-card fc-bottom" role="presentation">
+        <div class="fc-label">Meeting Link</div>
+        <div class="fc-value"><span class="fc-dot fc-dot-green"></span> Safe</div>
+      </div>
+      <div class="floating-card fc-left" role="presentation">
+        <div class="fc-label">Company</div>
+        <div class="fc-value"><span class="fc-dot fc-dot-amber"></span> Needs Review</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features-section" id="features-section" aria-labelledby="features-title">
+    <div class="section-heading">
+      <div class="section-tag">What we check</div>
+      <h2 class="section-title" id="features-title">Real evidence. Not guesswork.</h2>
+      <p class="section-subtitle">Every claim a recruiter makes gets cross-referenced against independent, authoritative sources you can verify yourself.</p>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon" aria-hidden="true">🏢</div>
+        <h3 class="feature-title">Company Registry</h3>
+        <p class="feature-desc">Cross-checks company names against UK Companies House, SEC EDGAR, MCA India, and UAE NER registries in real time.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" aria-hidden="true">🌐</div>
+        <h3 class="feature-title">Domain Age & History</h3>
+        <p class="feature-desc">WHOIS and RDAP lookups flag domains under 180 days old — a key indicator of hastily-constructed scam infrastructure.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" aria-hidden="true">🤖</div>
+        <h3 class="feature-title">ML Fraud Detection</h3>
+        <p class="feature-desc">Binary + multiclass ML models trained on real fraud data detect advance-fee patterns, urgency signals, and credential harvesting.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" aria-hidden="true">🔗</div>
+        <h3 class="feature-title">URL Reputation</h3>
+        <p class="feature-desc">PhishTank database lookups and ML URL analysis identify known phishing sites and suspicious domain patterns.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" aria-hidden="true">📧</div>
+        <h3 class="feature-title">Email Domain Mismatch</h3>
+        <p class="feature-desc">Flags recruiter emails using free providers (Gmail, Yahoo) when claiming to represent large registered enterprises.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" aria-hidden="true">🛡️</div>
+        <h3 class="feature-title">Meeting Link Inspector</h3>
+        <p class="feature-desc">Pre-call inspection of meeting invites for typosquats, unsolicited channels, lookalikes, and coercion signals — without joining.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section style="padding:60px;" id="how-it-works" aria-labelledby="how-title">
+    <div class="section-heading" style="margin-bottom:40px;">
+      <div class="section-tag">How it works</div>
+      <h2 class="section-title" id="how-title">Three checks. No black box.</h2>
+      <p class="section-subtitle">Every claim is checked against a source the recruiter doesn't control — and you see exactly what was found.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:900px;margin:0 auto;">
+      <div class="card" style="text-align:center;padding:32px 24px;">
+        <div style="font-size:32px;margin-bottom:16px;">📋</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--cyan);margin-bottom:10px;letter-spacing:.08em;">01 / CLAIM</div>
+        <h3 style="font-size:17px;margin-bottom:10px;">Extract the Claim</h3>
+        <p style="font-size:13.5px;color:var(--text-dim);line-height:1.6;">Company name, registration, job location, and payment terms are pulled from the posting — nothing assumed.</p>
+      </div>
+      <div class="card" style="text-align:center;padding:32px 24px;">
+        <div style="font-size:32px;margin-bottom:16px;">🔍</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--cyan);margin-bottom:10px;letter-spacing:.08em;">02 / CHECK</div>
+        <h3 style="font-size:17px;margin-bottom:10px;">Verify Independently</h3>
+        <p style="font-size:13.5px;color:var(--text-dim);line-height:1.6;">Each claim is checked against a source the recruiter doesn't control — registry, domain record, trained fraud model.</p>
+      </div>
+      <div class="card" style="text-align:center;padding:32px 24px;">
+        <div style="font-size:32px;margin-bottom:16px;">📊</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--cyan);margin-bottom:10px;letter-spacing:.08em;">03 / RESULT</div>
+        <h3 style="font-size:17px;margin-bottom:10px;">Show the Receipt</h3>
+        <p style="font-size:13.5px;color:var(--text-dim);line-height:1.6;">You get a plain result with its source and date — verified, unverifiable, or contradicted — never a guess dressed up as certainty.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section style="padding:60px;background:rgba(13,18,32,0.5);text-align:center;" id="about-section">
+    <div class="section-tag">About</div>
+    <h2 class="section-title" style="margin:12px 0 16px;">Built for people who need to know.</h2>
+    <p style="font-size:16px;color:var(--text-dim);max-width:56ch;margin:0 auto 32px;line-height:1.7;">LifeLens Ω is a reality integrity system built for job seekers, professionals, and organisations who need to verify claims before committing — a flight, savings, documents, or trust.</p>
+    <button class="btn-primary" id="aboutStartVerify">Start Your First Verification →</button>
+  </section>
+
+  <!-- Footer -->
+  <footer class="landing-footer" aria-label="Site footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <div class="footer-brand-icon" aria-hidden="true">⟁</div>
+          LifeLens Ω
+        </div>
+        <p class="footer-tagline">Real evidence. Smarter decisions. Safer futures.<br>Built with privacy and transparency as core principles.</p>
+        <div class="footer-trust-items">
+          <div class="footer-trust-item"><span class="footer-trust-icon">🔒</span> Privacy-first. No data sold.</div>
+          <div class="footer-trust-item"><span class="footer-trust-icon">⚖️</span> Transparent analysis. See why.</div>
+          <div class="footer-trust-item"><span class="footer-trust-icon">🛡️</span> Security built with care.</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Platform</div>
+        <div class="footer-links">
+          <a href="#" id="footerVerify">Job Verification</a>
+          <a href="#" id="footerCallGuard">Meeting Inspector</a>
+          <a href="#" id="footerDashboard">Dashboard</a>
+          <a href="#" id="footerAnalytics">Analytics</a>
+          <a href="#" id="footerReports">Reports</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Evidence Sources</div>
+        <div class="footer-links">
+          <a href="https://find-and-update.company-information.service.gov.uk/" target="_blank" rel="noopener">UK Companies House</a>
+          <a href="https://www.sec.gov/edgar" target="_blank" rel="noopener">SEC EDGAR (US)</a>
+          <a href="https://www.mca.gov.in/" target="_blank" rel="noopener">MCA Registry (India)</a>
+          <a href="https://www.phishtank.com/" target="_blank" rel="noopener">PhishTank (URLs)</a>
+          <a href="http://localhost:8000/docs" target="_blank" rel="noopener">API Documentation</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Transparency</div>
+        <div class="footer-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Data Retention</a>
+          <a href="#">Threat Model</a>
+          <a href="#">Source Catalog</a>
+          <a href="#">Changelog</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div>© 2025 LifeLens Ω · Evidence, not verdicts. · <a href="http://localhost:8000/docs" target="_blank" style="color:var(--cyan)">API Docs</a></div>
+      <div class="footer-trust-badges">
+        <div class="trust-badge">🔐 Trusted Sources</div>
+        <div class="trust-badge">🔬 Transparent Analysis</div>
+        <div class="trust-badge">🙋 User Control</div>
+        <div class="trust-badge">🛡️ Privacy First</div>
+      </div>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Security</a>
+        <a href="http://localhost:8000/api/v1/ml/health" target="_blank">System Health</a>
+      </div>
+    </div>
+  </footer>
+
+</div><!-- /page-landing -->
+
+
+<!-- ═══════════════════════════════════════════════
+     APP SHELL (Dashboard & Inner Pages)
+═══════════════════════════════════════════════ -->
+<div id="app" style="display:none;">
+
+  <!-- Sidebar Navigation -->
+  <aside class="sidebar" id="sidebar" role="navigation" aria-label="Application sidebar">
+    <div class="sidebar-logo">
+      <div class="sidebar-brand">
+        <div class="sidebar-brand-icon" aria-hidden="true">⟁</div>
+        LifeLens Ω
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="sidebar-section-label">Main</div>
+      <button class="sidebar-link active" data-page="dashboard" id="sb-dashboard">
+        <span class="nav-icon">📊</span> Dashboard
+      </button>
+      <button class="sidebar-link" data-page="verify" id="sb-verify">
+        <span class="nav-icon">🔍</span> Verify
+      </button>
+
+      <div class="sidebar-section-label" style="margin-top:8px;">Analysis</div>
+      <button class="sidebar-link" data-page="jobs" id="sb-jobs">
+        <span class="nav-icon">💼</span> Job Offers
+      </button>
+      <button class="sidebar-link" data-page="recruiters" id="sb-recruiters">
+        <span class="nav-icon">👥</span> Recruiters
+      </button>
+      <button class="sidebar-link" data-page="companies" id="sb-companies">
+        <span class="nav-icon">🏢</span> Companies
+      </button>
+      <button class="sidebar-link" data-page="meetings" id="sb-meetings">
+        <span class="nav-icon">📹</span> Meetings
+      </button>
+
+      <div class="sidebar-section-label" style="margin-top:8px;">Reports</div>
+      <button class="sidebar-link" data-page="reports" id="sb-reports">
+        <span class="nav-icon">📋</span> Reports
+      </button>
+      <button class="sidebar-link" data-page="analytics" id="sb-analytics">
+        <span class="nav-icon">📈</span> Analytics
+      </button>
+      <button class="sidebar-link" data-page="evidence" id="sb-evidence">
+        <span class="nav-icon">📚</span> Evidence Ledger
+      </button>
+
+      <div class="sidebar-section-label" style="margin-top:8px;">System</div>
+      <button class="sidebar-link" data-page="callguard" id="sb-callguard">
+        <span class="nav-icon">🛡️</span> Call Guardian
+      </button>
+      <button class="sidebar-link" data-page="recovery" id="sb-recovery">
+        <span class="nav-icon">🚨</span> Incident Recovery
+      </button>
+      <button class="sidebar-link" data-page="sre" id="sb-sre">
+        <span class="nav-icon">🩺</span> SRE Console
+      </button>
+      <button class="sidebar-link" data-page="settings" id="sb-settings">
+        <span class="nav-icon">⚙️</span> Settings
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div id="sidebarStatus" style="display:flex;align-items:center;gap:6px;margin-bottom:8px;">
+        <span class="status-dot" id="sbStatusDot"></span>
+        <span id="sbStatusText" style="font-size:11px;">Connecting…</span>
+      </div>
+      <button class="btn-ghost btn-sm" id="sbBackToLanding" style="width:100%;justify-content:center;font-size:12px;">← Back to Home</button>
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <div class="main-content">
+
+    <!-- Page Header -->
+    <header class="page-header">
+      <div style="display:flex;align-items:center;gap:14px;">
+        <button class="nav-ham" id="appNavHam" aria-label="Toggle sidebar" style="display:none;">☰</button>
+        <div class="page-header-left">
+          <div class="page-title" id="pageTitle">Dashboard</div>
+          <div class="page-subtitle" id="pageSubtitle">Here's what's happening with your verifications today</div>
+        </div>
+      </div>
+      <div class="page-header-right">
+        <div class="search-bar">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="globalSearch" placeholder="Search jobs, recruiters, companies…" aria-label="Global search">
+        </div>
+        <button class="btn-icon" id="notifBtn" aria-label="Notifications" title="Notifications">🔔</button>
+        <div class="user-avatar" id="userAvatar" title="Alex Clarke" aria-label="User menu">A</div>
+      </div>
+    </header>
+
+    <!-- Page Content -->
+    <div class="page-body" id="pageBody">
+
+      <!-- ══ DASHBOARD PAGE ══ -->
+      <section class="page-section active" id="page-dashboard" aria-label="Dashboard">
+
+        <div class="kpi-grid">
+          <div class="kpi-card kpi-blue">
+            <div class="kpi-label">Total Verifications</div>
+            <div class="kpi-value" id="kpiTotal">12</div>
+            <div class="kpi-trend up">↑ 8.3% this week</div>
+          </div>
+          <div class="kpi-card kpi-green">
+            <div class="kpi-label">Verified</div>
+            <div class="kpi-value" id="kpiVerified">8</div>
+            <div class="kpi-trend up">↑ 25% vs last week</div>
+          </div>
+          <div class="kpi-card kpi-amber">
+            <div class="kpi-label">Needs Review</div>
+            <div class="kpi-value" id="kpiReview">3</div>
+            <div class="kpi-trend down">↓ 14% this week</div>
+          </div>
+          <div class="kpi-card kpi-red">
+            <div class="kpi-label">High Risk</div>
+            <div class="kpi-value" id="kpiHighRisk">1</div>
+            <div class="kpi-trend neutral">→ No change</div>
+          </div>
+        </div>
+
+        <div class="dashboard-grid">
+          <div class="dashboard-main">
+            <!-- Activity Trend Chart -->
+            <div class="card">
+              <div class="section-title-sm">Activity Trend <a href="#" id="viewAllActivity">View all →</a></div>
+              <div class="chart-wrap" style="height:200px;">
+                <canvas id="trendChart" aria-label="Verification activity trend chart"></canvas>
+              </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="card">
+              <div class="section-title-sm">
+                Recent Activity
+                <a href="#" id="viewAllRecent">View all →</a>
+              </div>
+              <div class="activity-list" id="activityList">
+                <div class="activity-item" data-report="1">
+                  <div class="activity-avatar av-blue">T</div>
+                  <div class="activity-info">
+                    <div class="activity-name">TechCorp Solutions (Company)</div>
+                    <div class="activity-meta">Software Engineer · 2 hrs ago</div>
+                  </div>
+                  <div class="activity-actions">
+                    <span class="badge badge-verified">✓ Verified</span>
+                    <button class="btn-ghost btn-sm" onclick="openReport(1)">Review</button>
+                  </div>
+                </div>
+                <div class="activity-item" data-report="2">
+                  <div class="activity-avatar av-amber">S</div>
+                  <div class="activity-info">
+                    <div class="activity-name">Sarah Johnson (Recruiter)</div>
+                    <div class="activity-meta">Needs Review · 8 hrs ago</div>
+                  </div>
+                  <div class="activity-actions">
+                    <span class="badge badge-review">⚠ Review</span>
+                    <button class="btn-ghost btn-sm" onclick="openReport(2)">Review</button>
+                  </div>
+                </div>
+                <div class="activity-item" data-report="3">
+                  <div class="activity-avatar av-red">G</div>
+                  <div class="activity-info">
+                    <div class="activity-name">Global Talent Hub (Job Offer)</div>
+                    <div class="activity-meta">High Risk · 1 day ago</div>
+                  </div>
+                  <div class="activity-actions">
+                    <span class="badge badge-high-risk">⚑ High Risk</span>
+                    <button class="btn-ghost btn-sm" onclick="openReport(3)">Review</button>
+                  </div>
+                </div>
+                <div class="activity-item">
+                  <div class="activity-avatar av-green">Z</div>
+                  <div class="activity-info">
+                    <div class="activity-name">Zoom Meeting Link</div>
+                    <div class="activity-meta">Meeting Inspector · 1 day ago</div>
+                  </div>
+                  <div class="activity-actions">
+                    <span class="badge badge-verified">✓ Safe</span>
+                    <button class="btn-ghost btn-sm">Review</button>
+                  </div>
+                </div>
+                <div class="activity-item">
+                  <div class="activity-avatar av-red">A</div>
+                  <div class="activity-info">
+                    <div class="activity-name">Acme Corp (Company)</div>
+                    <div class="activity-meta">High Risk · 2 days ago</div>
+                  </div>
+                  <div class="activity-actions">
+                    <span class="badge badge-high-risk">⚑ High Risk</span>
+                    <button class="btn-ghost btn-sm">Review</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Side Panel -->
+          <div class="dashboard-side">
+            <!-- Verification Overview Donut -->
+            <div class="card">
+              <div class="section-title-sm">Verification Overview</div>
+              <div class="donut-wrap">
+                <div class="donut-canvas-wrap">
+                  <canvas id="donutChart" width="140" height="140" aria-label="Verification overview donut chart"></canvas>
+                  <div class="donut-center-text">
+                    <div class="donut-total" id="donutTotal">12</div>
+                    <div class="donut-label">Total</div>
+                  </div>
+                </div>
+                <div class="donut-legend">
+                  <div class="legend-item">
+                    <div class="legend-dot" style="background:var(--verified)"></div>
+                    <span class="legend-label">Verified</span>
+                    <span class="legend-pct" style="color:var(--verified)">67%</span>
+                  </div>
+                  <div class="legend-item">
+                    <div class="legend-dot" style="background:var(--review)"></div>
+                    <span class="legend-label">Needs Review</span>
+                    <span class="legend-pct" style="color:var(--review)">25%</span>
+                  </div>
+                  <div class="legend-item">
+                    <div class="legend-dot" style="background:var(--high-risk)"></div>
+                    <span class="legend-label">High Risk</span>
+                    <span class="legend-pct" style="color:var(--high-risk)">8%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="card">
+              <div class="section-title-sm">Quick Actions</div>
+              <div style="display:flex;flex-direction:column;gap:8px;">
+                <button class="btn-primary" style="justify-content:center;" id="dashVerify">🔍 New Verification</button>
+                <button class="btn-ghost" style="justify-content:center;" id="dashInspectLink">🛡️ Inspect Meeting Link</button>
+                <button class="btn-ghost" style="justify-content:center;" id="dashViewReports">📋 View Reports</button>
+                <button class="btn-ghost" style="justify-content:center;" id="dashAnalytics">📈 Analytics</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══ VERIFY PAGE ══ -->
+      <section class="page-section" id="page-verify" aria-label="Job offer verification workspace">
+
+        <div class="verify-workspace">
+          <!-- Form Column -->
+          <div class="verify-form-col">
+            <div class="card" style="margin-bottom:16px;">
+              <h2 style="font-size:18px;font-weight:700;margin-bottom:6px;">Verify Job Offer</h2>
+              <p style="font-size:13px;color:var(--text-dim);margin-bottom:20px;">Fill in the details below to check this job offer with real evidence.</p>
+
+              <!-- Template Presets -->
+              <div class="form-group" style="margin-bottom:16px;">
+                <label class="form-label" for="templateSelect">Load Preset</label>
+                <select class="form-select" id="templateSelect">
+                  <option value="custom">— Custom / blank form —</option>
+                  <option value="legit">✅ Legitimate: Arm Holdings</option>
+                  <option value="fee_scam">🚨 Fee Scam: Global Prosperity Ltd</option>
+                  <option value="domain_mismatch">⚠️ Domain Mismatch: Lloyds (fake)</option>
+                  <option value="visa_urgency">🔴 Visa Urgency: Emirates Grand Hotels</option>
+                </select>
+              </div>
+
+              <form id="verificationForm" novalidate>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label" for="jobTitle">Job Title</label>
+                    <input class="form-input" type="text" id="jobTitle" placeholder="e.g. Software Engineer" autocomplete="off">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="companyName">Company Name</label>
+                    <input class="form-input" type="text" id="companyName" placeholder="e.g. TechCorp Solutions">
+                  </div>
+                </div>
+
+                <div class="form-row" style="margin-top:12px;">
+                  <div class="form-group">
+                    <label class="form-label" for="jobPostingUrl">Job URL</label>
+                    <input class="form-input" type="url" id="jobPostingUrl" placeholder="https://linkedin.com/jobs/…">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="recruiterEmail">Recruiter Email</label>
+                    <input class="form-input" type="email" id="recruiterEmail" placeholder="recruiter@company.com">
+                  </div>
+                </div>
+
+                <div class="form-row" style="margin-top:12px;">
+                  <div class="form-group">
+                    <label class="form-label" for="country">Claimed Country</label>
+                    <select class="form-select" id="country">
+                      <option value="GB">United Kingdom (GB)</option>
+                      <option value="US">United States (US)</option>
+                      <option value="IN">India (IN)</option>
+                      <option value="AE">UAE (AE)</option>
+                      <option value="AU">Australia (AU)</option>
+                      <option value="CA">Canada (CA)</option>
+                      <option value="OTHER">Other</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="companyWebsite">Company Website</label>
+                    <input class="form-input" type="url" id="companyWebsite" placeholder="https://company.com">
+                  </div>
+                </div>
+
+                <div class="form-group" style="margin-top:12px;">
+                  <label class="form-label" for="jobDescription">Job Description <span style="color:var(--high-risk)">*</span></label>
+                  <textarea class="form-textarea" id="jobDescription" placeholder="Paste the full job description or recruiter message here…" rows="5" required></textarea>
+                </div>
+
+                <!-- Options -->
+                <div style="margin:14px 0;display:flex;align-items:center;gap:10px;">
+                  <label class="toggle" for="mlOnlyToggle" aria-label="ML only mode toggle">
+                    <input type="checkbox" id="mlOnlyToggle">
+                    <span class="toggle-slider"></span>
+                  </label>
+                  <span style="font-size:13px;color:var(--text-dim);">ML-only mode (faster, no external checks)</span>
+                </div>
+
+                <!-- Checklist -->
+                <div class="verify-checklist" id="checklistItems">
+                  <div class="check-item" id="chk-ml"><span class="check-item-icon">⬜</span><span class="check-item-text">Analyze job description with ML fraud model</span></div>
+                  <div class="check-item" id="chk-registry"><span class="check-item-icon">⬜</span><span class="check-item-text">Check company registry (Companies House / EDGAR)</span></div>
+                  <div class="check-item" id="chk-domain"><span class="check-item-icon">⬜</span><span class="check-item-text">Verify company domain age via WHOIS</span></div>
+                  <div class="check-item" id="chk-email"><span class="check-item-icon">⬜</span><span class="check-item-text">Cross-check recruiter email domain</span></div>
+                  <div class="check-item" id="chk-url"><span class="check-item-icon">⬜</span><span class="check-item-text">Analyze URLs in posting for phishing</span></div>
+                </div>
+
+                <div class="form-check" style="margin-bottom:16px;">
+                  <input type="checkbox" id="consentCheck" required>
+                  <label for="consentCheck">I consent to this verification and understand results are evidence-based assessments, not legal verdicts.</label>
+                </div>
+
+                <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+                  <button type="submit" class="btn-primary" id="btnRunVerification" style="position:relative;">
+                    <span id="btnSpinner" class="spinner hidden"></span>
+                    Start Verification →
+                  </button>
+                  <button type="button" class="btn-ghost" id="btnClearForm">Clear</button>
+                </div>
+
+                <p style="font-size:11.5px;color:var(--text-muted);margin-top:12px;">Real evidence. Real insights. No legal advice implied.</p>
+              </form>
+            </div>
+          </div>
+
+          <!-- Results Column -->
+          <div class="verify-result-col">
+            <div id="emptyState" class="empty-state">
+              <div class="empty-icon">🔍</div>
+              <div class="empty-title">No verification yet</div>
+              <div class="empty-desc">Fill in the form and click "Start Verification" to check a job offer against real evidence sources.</div>
+            </div>
+
+            <div id="resultsContent" class="hidden">
+              <!-- Risk Banner -->
+              <div id="riskBanner" class="risk-banner risk-low">
+                <div class="risk-top">
+                  <div>
+                    <span id="riskLevelTag" class="risk-level-tag risk-low">🟢 LOW RISK</span>
+                    <span id="confidenceTag" style="font-size:12px;color:var(--text-dim);margin-left:10px;"></span>
+                  </div>
+                  <span style="font-size:11px;color:var(--text-muted);" id="assessmentTimestamp"></span>
+                </div>
+                <p id="headlineText" style="font-size:14px;margin-top:10px;line-height:1.5;"></p>
+              </div>
+
+              <!-- Signal Row -->
+              <div id="signalRow" style="margin-bottom:16px;display:flex;flex-wrap:wrap;gap:6px;"></div>
+
+              <!-- Check Cards -->
+              <div class="check-cards-grid" id="checkCards"></div>
+
+              <!-- Signals List -->
+              <div id="signalsBlock" style="display:none;">
+                <div class="card" style="margin-bottom:16px;">
+                  <div style="font-size:13px;font-weight:700;margin-bottom:12px;color:var(--review);">⚠ Risk Signals</div>
+                  <ul id="signalsList" style="padding-left:0;"></ul>
+                </div>
+              </div>
+
+              <!-- CECT Section -->
+              <div id="cectSection" style="display:none;">
+                <div class="card">
+                  <div style="font-size:13px;font-weight:700;margin-bottom:12px;">CECT Analysis</div>
+                  <div id="cectContent"></div>
+                </div>
+              </div>
+
+              <!-- Evidence Block -->
+              <div id="evidenceBlock" style="display:none;">
+                <div class="card">
+                  <div style="font-size:13px;font-weight:700;margin-bottom:12px;">Evidence Sources</div>
+                  <div id="evidenceContent"></div>
+                </div>
+              </div>
+
+              <!-- Feedback -->
+              <div class="card" style="margin-top:16px;">
+                <div style="font-size:12px;color:var(--text-dim);margin-bottom:10px;">Was this result helpful?</div>
+                <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+                  <button class="btn-ghost btn-sm btn-feedback" data-feedback="accurate">👍 Accurate</button>
+                  <button class="btn-ghost btn-sm btn-feedback" data-feedback="false_positive">False Positive</button>
+                  <button class="btn-ghost btn-sm btn-feedback" data-feedback="false_negative">Missed Something</button>
+                  <span id="feedbackStatus" class="hidden" style="font-size:12px;color:var(--verified);">✓ Thank you!</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══ EVIDENCE REPORT PAGE ══ -->
+      <section class="page-section" id="page-reports" aria-label="Evidence report">
+        <div class="card">
+          <!-- Breadcrumb -->
+          <div style="font-size:12px;color:var(--text-dim);margin-bottom:16px;">
+            <button class="btn-ghost btn-sm" id="reportBack">← Reports</button>
+            <span style="margin:0 8px;">›</span>
+            <span id="reportBreadcrumb">Marketing Solutions › Software Engineer</span>
+          </div>
+
+          <div class="report-header-row">
+            <div class="verdict-circle needs-review" id="verdictCircle">
+              <div class="verdict-label" id="verdictLabel">Needs Review</div>
+              <div class="verdict-score" id="verdictScore">68%</div>
+              <div class="verdict-sub">confidence</div>
+            </div>
+            <div>
+              <h2 style="font-size:20px;font-weight:700;margin-bottom:8px;" id="reportTitle">Evidence Report</h2>
+              <div style="font-size:12px;color:var(--text-dim);margin-bottom:4px;">Report ID: <span class="mono" id="reportId">AL-2025-0047</span></div>
+              <div style="font-size:12px;color:var(--text-dim);margin-bottom:12px;" id="reportDate">Aug 24, 2025 · 2:14 PM</div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                <button class="btn-primary btn-sm" id="downloadReportBtn">⬇ Download Report</button>
+                <button class="btn-ghost btn-sm" id="shareReportBtn">Share</button>
+                <button class="btn-ghost btn-sm" id="newVerifyBtn">New Verification</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tabs -->
+          <div class="report-tabs" role="tablist">
+            <button class="report-tab active" data-tab="overview" role="tab" aria-selected="true">Overview</button>
+            <button class="report-tab" data-tab="claims" role="tab" aria-selected="false">Claims</button>
+            <button class="report-tab" data-tab="evidence" role="tab" aria-selected="false">Evidence</button>
+            <button class="report-tab" data-tab="sources" role="tab" aria-selected="false">Sources</button>
+            <button class="report-tab" data-tab="cect" role="tab" aria-selected="false">CECT Analysis</button>
+          </div>
+
+          <!-- Overview Tab -->
+          <div id="tab-overview">
+            <div class="entity-grid">
+              <div class="entity-card">
+                <div class="entity-type">Company</div>
+                <div class="entity-name">TechCorp Solutions</div>
+                <div class="entity-status">Company info &amp; registered</div>
+                <div class="entity-verified">✓ Registry Match</div>
+              </div>
+              <div class="entity-card">
+                <div class="entity-type">Domain</div>
+                <div class="entity-name">techcorp.com</div>
+                <div class="entity-status">Domain age: 4 years, 2 months</div>
+                <div class="entity-verified">✓ Established Domain</div>
+              </div>
+              <div class="entity-card">
+                <div class="entity-type">Job Title</div>
+                <div class="entity-name">Software Engineer</div>
+                <div class="entity-status">Recruiter profile consistent</div>
+                <div style="font-size:11px;color:var(--review);margin-top:4px;">⚠ Recruiter history limited</div>
+              </div>
+              <div class="entity-card">
+                <div class="entity-type">Source Platform</div>
+                <div class="entity-name">LinkedIn</div>
+                <div class="entity-status">Posted via verified platform</div>
+                <div class="entity-verified">✓ Checked</div>
+              </div>
+            </div>
+
+            <!-- Evidence Connection Graph -->
+            <div style="margin-bottom:20px;">
+              <div style="font-size:13px;font-weight:700;margin-bottom:12px;">Evidence Connection Graph</div>
+              <div class="evidence-graph" id="evidenceGraphContainer">
+                <canvas id="evidenceGraph" style="width:100%;height:100%;"></canvas>
+              </div>
+            </div>
+
+            <!-- Why this verdict -->
+            <div style="background:rgba(245,158,11,0.08);border:1px solid var(--review-border);border-radius:var(--radius);padding:16px;">
+              <div style="font-size:13px;font-weight:700;color:var(--review);margin-bottom:8px;">💡 Why this verdict?</div>
+              <p style="font-size:13.5px;color:var(--text-dim);line-height:1.6;" id="verdictExplanation">
+                Most information is consistent and verified. However, the recruiter's profile has limited history and the job description shows some inconsistencies that warrant further verification.
+              </p>
+            </div>
+          </div>
+
+          <!-- Claims Tab -->
+          <div id="tab-claims" style="display:none;">
+            <div style="color:var(--text-dim);font-size:14px;padding:20px 0;">Claims extracted from the job posting would appear here when a real verification has been run.</div>
+          </div>
+
+          <!-- Evidence Tab -->
+          <div id="tab-evidence" style="display:none;">
+            <div style="color:var(--text-dim);font-size:14px;padding:20px 0;">Evidence sources and timestamps appear here after verification.</div>
+          </div>
+
+          <!-- Sources Tab -->
+          <div id="tab-sources" style="display:none;">
+            <div style="color:var(--text-dim);font-size:14px;padding:20px 0;">Source attribution and reliability scores appear here.</div>
+          </div>
+
+          <!-- CECT Tab -->
+          <div id="tab-cect" style="display:none;">
+            <div style="color:var(--text-dim);font-size:14px;padding:20px 0;">CECT (Claim Evidence Consistency Test) analysis appears here.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══ JOBS / RECRUITERS / COMPANIES PAGE ══ -->
+      <section class="page-section" id="page-jobs" aria-label="Job and recruiter analysis">
+        <div class="card">
+          <!-- Top tabs -->
+          <div style="display:flex;gap:4px;margin-bottom:20px;border-bottom:1px solid var(--border);padding-bottom:0;">
+            <button class="report-tab active" data-entity-tab="jobs" style="margin-bottom:-1px;">Jobs</button>
+            <button class="report-tab" data-entity-tab="recruiters" style="margin-bottom:-1px;">Recruiters</button>
+            <button class="report-tab" data-entity-tab="companies" style="margin-bottom:-1px;">Companies</button>
+          </div>
+
+          <!-- Filters -->
+          <div class="table-filters">
+            <div class="filter-tabs">
+              <button class="filter-tab active" data-filter="all">All</button>
+              <button class="filter-tab" data-filter="remote">Remote</button>
+              <button class="filter-tab" data-filter="onsite">On-site</button>
+            </div>
+            <div class="search-bar" style="flex:1;max-width:300px;">
+              <span class="search-icon">🔍</span>
+              <input type="text" id="jobsSearch" placeholder="Search jobs, recruiters, companies…" aria-label="Search jobs">
+            </div>
+            <button class="btn-ghost btn-sm">Sort ↕</button>
+          </div>
+
+          <!-- Table -->
+          <div style="overflow-x:auto;">
+            <table class="data-table" id="jobsTable" aria-label="Job offers table">
+              <thead>
+                <tr>
+                  <th>Job / Company</th>
+                  <th>Recruiter</th>
+                  <th>Risk</th>
+                  <th>Location</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="jobsTableBody">
+                <tr>
+                  <td>
+                    <div class="table-company">
+                      <div class="table-company-icon av-blue">T</div>
+                      <div>
+                        <div class="table-company-name">Software Engineer</div>
+                        <div class="table-company-sub">TechCorp Solutions</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td style="font-size:13px;">Sarah Johnson</td>
+                  <td><span class="badge badge-low">● Low</span></td>
+                  <td style="font-size:13px;color:var(--text-dim);">Remote</td>
+                  <td><button class="btn-ghost btn-sm" onclick="openReport(1)">View</button></td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="table-company">
+                      <div class="table-company-icon av-violet">B</div>
+                      <div>
+                        <div class="table-company-name">Frontend Developer</div>
+                        <div class="table-company-sub">BigTech Inc</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td style="font-size:13px;">Mike Wilson</td>
+                  <td><span class="badge badge-low">● Low</span></td>
+                  <td style="font-size:13px;color:var(--text-dim);">On-site</td>
+                  <td><button class="btn-ghost btn-sm">View</button></td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="table-company">
+                      <div class="table-company-icon av-amber">G</div>
+                      <div>
+                        <div class="table-company-name">Data Analyst</div>
+                        <div class="table-company-sub">GlobalCon Ltd</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td style="font-size:13px;">Emma Brown</td>
+                  <td><span class="badge badge-medium">● Medium</span></td>
+                  <td style="font-size:13px;color:var(--text-dim);">Remote</td>
+                  <td><button class="btn-ghost btn-sm">View</button></td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="table-company">
+                      <div class="table-company-icon av-red">P</div>
+                      <div>
+                        <div class="table-company-name">Product Manager</div>
+                        <div class="table-company-sub">AppSphere</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td style="font-size:13px;">David Brown</td>
+                  <td><span class="badge badge-high">⚑ High</span></td>
+                  <td style="font-size:13px;color:var(--text-dim);">On-site</td>
+                  <td><button class="btn-ghost btn-sm">View</button></td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="table-company">
+                      <div class="table-company-icon av-red">I</div>
+                      <div>
+                        <div class="table-company-name">Full Stack Developer</div>
+                        <div class="table-company-sub">InnovateLabs</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td style="font-size:13px;">James Taylor</td>
+                  <td><span class="badge badge-high">⚑ High</span></td>
+                  <td style="font-size:13px;color:var(--text-dim);">US</td>
+                  <td><button class="btn-ghost btn-sm">View</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══ RECRUITERS PAGE ══ (same structure) -->
+      <section class="page-section" id="page-recruiters" aria-label="Recruiter analysis">
+        <div class="card">
+          <div style="display:flex;gap:4px;margin-bottom:20px;border-bottom:1px solid var(--border);padding-bottom:0;">
+            <button class="report-tab" data-entity-tab="jobs" style="margin-bottom:-1px;">Jobs</button>
+            <button class="report-tab active" data-entity-tab="recruiters" style="margin-bottom:-1px;">Recruiters</button>
+            <button class="report-tab" data-entity-tab="companies" style="margin-bottom:-1px;">Companies</button>
+          </div>
+          <div class="table-filters">
+            <div class="search-bar" style="flex:1;max-width:300px;">
+              <span class="search-icon">🔍</span>
+              <input type="text" placeholder="Search recruiters…" aria-label="Search recruiters">
+            </div>
+          </div>
+          <table class="data-table" aria-label="Recruiters table">
+            <thead>
+              <tr><th>Recruiter</th><th>Company</th><th>Email Domain</th><th>Risk</th><th>Action</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><div class="table-company"><div class="table-company-icon av-green">S</div><div><div class="table-company-name">Sarah Johnson</div><div class="table-company-sub">Verified profile</div></div></div></td>
+                <td>TechCorp Solutions</td>
+                <td><span class="mono" style="font-size:12px;">@techcorp.com</span></td>
+                <td><span class="badge badge-low">● Low</span></td>
+                <td><button class="btn-ghost btn-sm">View</button></td>
+              </tr>
+              <tr>
+                <td><div class="table-company"><div class="table-company-icon av-amber">M</div><div><div class="table-company-name">Mike Wilson</div><div class="table-company-sub">Limited history</div></div></div></td>
+                <td>BigTech Inc</td>
+                <td><span class="mono" style="font-size:12px;">@gmail.com</span></td>
+                <td><span class="badge badge-medium">● Medium</span></td>
+                <td><button class="btn-ghost btn-sm">View</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ══ COMPANIES PAGE ══ -->
+      <section class="page-section" id="page-companies" aria-label="Company analysis">
+        <div class="card">
+          <div style="display:flex;gap:4px;margin-bottom:20px;border-bottom:1px solid var(--border);padding-bottom:0;">
+            <button class="report-tab" data-entity-tab="jobs" style="margin-bottom:-1px;">Jobs</button>
+            <button class="report-tab" data-entity-tab="recruiters" style="margin-bottom:-1px;">Recruiters</button>
+            <button class="report-tab active" data-entity-tab="companies" style="margin-bottom:-1px;">Companies</button>
+          </div>
+          <table class="data-table" aria-label="Companies table">
+            <thead>
+              <tr><th>Company</th><th>Registry</th><th>Domain Age</th><th>Risk</th><th>Action</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><div class="table-company"><div class="table-company-icon av-blue">T</div><div><div class="table-company-name">TechCorp Solutions</div><div class="table-company-sub">UK registered</div></div></div></td>
+                <td><span class="badge badge-verified">✓ Companies House</span></td>
+                <td>4 years</td>
+                <td><span class="badge badge-low">● Low</span></td>
+                <td><button class="btn-ghost btn-sm">View</button></td>
+              </tr>
+              <tr>
+                <td><div class="table-company"><div class="table-company-icon av-red">G</div><div><div class="table-company-name">Global Prosperity Ltd</div><div class="table-company-sub">Not found in registry</div></div></div></td>
+                <td><span class="badge badge-high-risk">✗ Not Found</span></td>
+                <td>11 days</td>
+                <td><span class="badge badge-high">⚑ High</span></td>
+                <td><button class="btn-ghost btn-sm">View</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ══ MEETINGS PAGE ══ -->
+      <section class="page-section" id="page-meetings" aria-label="Meeting safety">
+        <div class="meeting-layout">
+          <!-- Main Panel -->
+          <div>
+            <div class="card" style="margin-bottom:16px;">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px;">
+                <div>
+                  <h3 style="font-size:16px;font-weight:700;">Meeting Safety Room</h3>
+                  <div style="font-size:12px;color:var(--text-dim);">Live Verification · Zoom</div>
+                </div>
+                <div class="protected-badge">🛡️ Protected</div>
+              </div>
+
+              <div class="meeting-timer-display" id="meetingTimer">00:00:00</div>
+
+              <!-- Participants -->
+              <div style="font-size:13px;font-weight:700;margin-bottom:10px;">Participants (3)</div>
+              <div class="participants-list">
+                <div class="participant-item">
+                  <div class="participant-avatar av-blue">A</div>
+                  <div>
+                    <div class="participant-name">Alex Clarke</div>
+                    <div class="participant-role">Host · You</div>
+                  </div>
+                  <span class="badge badge-verified" style="margin-left:auto;">✓ Verified</span>
+                </div>
+                <div class="participant-item">
+                  <div class="participant-avatar av-green">S</div>
+                  <div>
+                    <div class="participant-name">Sarah Johnson</div>
+                    <div class="participant-role">Recruiter · TechCorp</div>
+                  </div>
+                  <span class="badge badge-verified" style="margin-left:auto;">✓ Verified</span>
+                </div>
+                <div class="participant-item">
+                  <div class="participant-avatar av-amber">M</div>
+                  <div>
+                    <div class="participant-name">Michael Brown</div>
+                    <div class="participant-role">Unknown · Unverified</div>
+                  </div>
+                  <span class="badge badge-review" style="margin-left:auto;">⚠ Review</span>
+                </div>
+              </div>
+
+              <!-- Toolbar -->
+              <div class="meeting-toolbar">
+                <div class="tool-btn"><div class="tool-btn-icon">🎤</div><div>Mic</div></div>
+                <div class="tool-btn"><div class="tool-btn-icon">📷</div><div>Camera</div></div>
+                <div class="tool-btn"><div class="tool-btn-icon">📤</div><div>Share</div></div>
+                <div class="tool-btn"><div class="tool-btn-icon">⋯</div><div>More</div></div>
+                <button class="btn-danger btn-sm" id="endMeetingBtn" style="margin-left:8px;">End Session</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Safety Panel -->
+          <div>
+            <div class="card" style="margin-bottom:16px;">
+              <div style="font-size:13px;font-weight:700;margin-bottom:12px;">Safety Checklist</div>
+              <div class="safety-checklist">
+                <div class="safety-check-item ok">✓ Host identity confirmed</div>
+                <div class="safety-check-item ok">✓ Platform verified (Zoom)</div>
+                <div class="safety-check-item ok">✓ No suspicious activity</div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div style="font-size:13px;font-weight:700;margin-bottom:12px;color:var(--review);">⚠ Suspicious Signals</div>
+              <div class="safety-checklist">
+                <div class="safety-check-item warn">Unverified participant joined</div>
+                <div class="safety-check-item warn">Recording requested unexpectedly</div>
+              </div>
+              <p style="font-size:11.5px;color:var(--text-muted);margin-top:12px;line-height:1.5;">Verification does not replace your personal judgment. Do not share sensitive personal information.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══ EVIDENCE LEDGER PAGE ══ -->
+      <section class="page-section" id="page-evidence" aria-label="Evidence ledger">
+        <div class="card">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px;">
+            <h2 style="font-size:18px;font-weight:700;">Evidence Ledger</h2>
+            <div style="display:flex;gap:8px;">
+              <button class="btn-ghost btn-sm">Filter ▾</button>
+              <button class="btn-ghost btn-sm">Export CSV</button>
+            </div>
+          </div>
+          <table class="data-table" aria-label="Evidence ledger table">
+            <thead>
+              <tr><th>Timestamp</th><th>Entity</th><th>Source</th><th>Finding</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="mono" style="font-size:11px;">2025-08-24 14:12</td>
+                <td>TechCorp Solutions</td>
+                <td>UK Companies House</td>
+                <td>Company registered and active</td>
+                <td><span class="badge badge-verified">✓ Confirmed</span></td>
+              </tr>
+              <tr>
+                <td class="mono" style="font-size:11px;">2025-08-24 14:12</td>
+                <td>techcorp.com</td>
+                <td>WHOIS / RDAP</td>
+                <td>Domain age: 1,534 days</td>
+                <td><span class="badge badge-verified">✓ Confirmed</span></td>
+              </tr>
+              <tr>
+                <td class="mono" style="font-size:11px;">2025-08-24 08:30</td>
+                <td>Global Talent Hub</td>
+                <td>ML Fraud Model</td>
+                <td>Fee-scam pattern detected (94.2%)</td>
+                <td><span class="badge badge-high-risk">⚑ High Risk</span></td>
+              </tr>
+              <tr>
+                <td class="mono" style="font-size:11px;">2025-08-23 16:44</td>
+                <td>zoom.us/j/1234567890</td>
+                <td>PhishTank + ML URL</td>
+                <td>No phishing indicators found</td>
+                <td><span class="badge badge-safe">✓ Safe</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ══ ANALYTICS PAGE ══ -->
+      <section class="page-section" id="page-analytics" aria-label="Analytics and trends">
+        <div class="analytics-grid">
+          <div class="card analytics-full">
+            <div style="font-size:15px;font-weight:700;margin-bottom:16px;">Verification Trends (Last 6 Months)</div>
+            <div class="chart-wrap" style="height:240px;">
+              <canvas id="analyticsChart" aria-label="Verification trends chart"></canvas>
+            </div>
+          </div>
+          <div class="card">
+            <div style="font-size:15px;font-weight:700;margin-bottom:16px;">Risk Distribution</div>
+            <div class="chart-wrap" style="height:200px;">
+              <canvas id="riskDistChart" aria-label="Risk distribution chart"></canvas>
+            </div>
+          </div>
+          <div class="card">
+            <div style="font-size:15px;font-weight:700;margin-bottom:16px;">Source Breakdown</div>
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              <div><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;"><span>ML Fraud Model</span><span style="color:var(--cyan);">100%</span></div><div style="height:6px;background:var(--bg-glass);border-radius:3px;"><div style="height:100%;width:100%;background:var(--cyan);border-radius:3px;"></div></div></div>
+              <div><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;"><span>Companies House</span><span style="color:var(--blue);">72%</span></div><div style="height:6px;background:var(--bg-glass);border-radius:3px;"><div style="height:100%;width:72%;background:var(--blue);border-radius:3px;"></div></div></div>
+              <div><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;"><span>WHOIS / RDAP</span><span style="color:var(--violet);">65%</span></div><div style="height:6px;background:var(--bg-glass);border-radius:3px;"><div style="height:100%;width:65%;background:var(--violet);border-radius:3px;"></div></div></div>
+              <div><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;"><span>PhishTank</span><span style="color:var(--review);">41%</span></div><div style="height:6px;background:var(--bg-glass);border-radius:3px;"><div style="height:100%;width:41%;background:var(--review);border-radius:3px;"></div></div></div>
+              <div><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;"><span>SEC EDGAR</span><span style="color:var(--verified);">28%</span></div><div style="height:6px;background:var(--bg-glass);border-radius:3px;"><div style="height:100%;width:28%;background:var(--verified);border-radius:3px;"></div></div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══ CALL GUARDIAN PAGE ══ -->
+      <section class="page-section" id="page-callguard" aria-label="Pre-call meeting link inspector">
+        <div class="card" style="margin-bottom:20px;">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap;">
+            <div>
+              <div style="font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--cyan);margin-bottom:4px;letter-spacing:.06em;">CALL GUARDIAN · LAYER 0</div>
+              <h2 style="font-size:18px;font-weight:700;">Pre-Call Meeting Link Inspector</h2>
+              <p style="font-size:13px;color:var(--text-dim);margin-top:4px;">Inspect meeting links before joining. Detect typosquats, lookalikes, and suspicious channels without ever connecting.</p>
+            </div>
+          </div>
+
+          <!-- Quick Link Check -->
+          <div style="margin-bottom:20px;">
+            <div class="form-label" style="margin-bottom:8px;">Meeting Link URL</div>
+            <div class="link-inspector-form">
+              <div class="link-input-wrap">
+                <span>🔗</span>
+                <input type="url" id="quickLinkInput" placeholder="https://zoom.us/j/1234567890" aria-label="Meeting link URL to inspect">
+              </div>
+              <button class="btn-primary" id="quickCheckBtn">Check Link</button>
+            </div>
+          </div>
+
+          <!-- Quick result display -->
+          <div id="quickLinkResult" class="hidden">
+            <div class="link-result-card">
+              <div class="link-safety-score">
+                <div class="safety-icon" id="safetyIcon">🔍</div>
+                <div>
+                  <div class="safety-verdict" id="safetyVerdict">Analyzing…</div>
+                  <div id="safetyBadgeWrap" style="margin-top:6px;"></div>
+                </div>
+              </div>
+              <div class="link-details" id="linkDetails">
+                <div class="link-detail-row">
+                  <div class="ld-label">Domain</div>
+                  <div class="ld-value ok" id="ld-domain">zoom.us</div>
+                </div>
+                <div class="link-detail-row">
+                  <div class="ld-label">Location</div>
+                  <div class="ld-value" id="ld-location">US</div>
+                </div>
+                <div class="link-detail-row">
+                  <div class="ld-label">Provider</div>
+                  <div class="ld-value ok" id="ld-provider">Zoom Video Communications</div>
+                </div>
+                <div class="link-detail-row">
+                  <div class="ld-label">Redirect</div>
+                  <div class="ld-value ok" id="ld-redirect">None detected</div>
+                </div>
+              </div>
+              <div style="margin-top:14px;padding:10px 12px;background:rgba(245,158,11,0.08);border:1px solid var(--review-border);border-radius:var(--radius-sm);">
+                <p style="font-size:12px;color:var(--text-dim);">⚠ Verification does not replace your personal judgment. Do not share sensitive personal information in unverified meetings.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Full Call Guardian Form (existing functionality preserved) -->
+        <div class="cg-grid" id="callguard">
+          <div class="cg-card">
+            <div style="font-size:13px;font-weight:700;margin-bottom:16px;">Full Invite Inspection</div>
+            <div class="cg-field">
+              <label class="cg-label" for="cgInviteUrl">Meeting Invite URL</label>
+              <input type="url" id="cgInviteUrl" class="form-input" placeholder="https://zoom.us/j/… or https://meet.google.com/…" required>
+            </div>
+            <div style="display:flex;gap:12px;">
+              <div class="cg-field" style="flex:1;">
+                <label class="cg-label" for="cgPlatform">Platform Hint</label>
+                <select id="cgPlatform" class="form-select">
+                  <option value="">Auto-Detect</option>
+                  <option value="zoom">Zoom</option>
+                  <option value="meet">Google Meet</option>
+                  <option value="teams">Microsoft Teams</option>
+                  <option value="webex">Cisco Webex</option>
+                  <option value="telegram">Telegram</option>
+                  <option value="whatsapp">WhatsApp</option>
+                </select>
+              </div>
+              <div class="cg-field" style="flex:1;">
+                <label class="cg-label" for="cgChannel">Arrival Channel</label>
+                <select id="cgChannel" class="form-select">
+                  <option value="corporate_calendar">Calendar Invite</option>
+                  <option value="verified_email">Corporate Email</option>
+                  <option value="slack">Corporate Slack</option>
+                  <option value="telegram_dm">Telegram DM (Unknown)</option>
+                  <option value="whatsapp_unknown_number">WhatsApp (Unknown Number)</option>
+                  <option value="unknown_sms">SMS / Text Message</option>
+                  <option value="social_dm">Social Media DM</option>
+                </select>
+              </div>
+            </div>
+            <div class="cg-field">
+              <label class="cg-label" for="cgHostEmail">Claimed Host Email (Optional)</label>
+              <input type="email" id="cgHostEmail" class="form-input" placeholder="e.g. recruiter@company.com">
+            </div>
+            <div class="cg-field">
+              <label class="cg-label" for="cgMessageContext">Accompanying Message (Optional)</label>
+              <textarea id="cgMessageContext" class="form-textarea" rows="2" placeholder="e.g. 'Urgent legal summons: connect immediately within 10 minutes'" style="min-height:60px;"></textarea>
+            </div>
+            <div class="cg-consent">
+              <input type="checkbox" id="cgConsent" style="margin-top:2px;accent-color:var(--cyan);">
+              <label for="cgConsent" style="cursor:pointer;font-size:12px;color:var(--text-dim);">I consent to inspecting this meeting link metadata with LifeLens Ω (§P5/§P6). No audio, video, or call contents are ever accessed.</label>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;">
+              <button class="btn-primary" id="btnInspectCallInvite">Inspect Invite →</button>
+              <span id="cgStatus" style="font-size:12px;color:var(--text-dim);"></span>
+            </div>
+          </div>
+
+          <!-- Result Card -->
+          <div class="cg-card" id="cgResultCard">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px;">
+              <div>
+                <div style="font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--text-muted);margin-bottom:6px;letter-spacing:.05em;">CALL GUARDIAN ASSESSMENT</div>
+                <h3 id="cgVerdictText" style="font-size:18px;font-weight:700;">Needs Verification</h3>
+              </div>
+              <div class="cg-stamp unverified" id="cgStamp">UNVERIFIED</div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;padding:12px;background:var(--bg-glass);border:1px solid var(--border);border-radius:var(--radius-sm);">
+              <div>
+                <div style="font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--text-muted);">RISK SCORE</div>
+                <div id="cgRiskScore" style="font-size:20px;font-weight:800;font-family:'JetBrains Mono',monospace;">0.00</div>
+              </div>
+              <div>
+                <div style="font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--text-muted);">SAFE TO JOIN</div>
+                <div id="cgSafeToJoin" style="font-size:20px;font-weight:800;font-family:'JetBrains Mono',monospace;color:var(--text-muted);">NO</div>
+              </div>
+            </div>
+            <div style="margin-bottom:14px;">
+              <div style="font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--text-muted);margin-bottom:6px;letter-spacing:.05em;">RISK SIGNALS (§P3)</div>
+              <div id="cgSignalsList" style="font-size:12.5px;display:flex;flex-direction:column;gap:6px;">
+                <div style="color:var(--text-muted);font-style:italic;">No invite evaluated yet. Paste a link and click Inspect Invite.</div>
+              </div>
+            </div>
+            <div>
+              <div style="font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--text-muted);margin-bottom:6px;letter-spacing:.05em;">RECOMMENDATIONS (§P6)</div>
+              <ul id="cgRecommendationsList" style="font-size:12.5px;padding-left:18px;color:var(--text-dim);line-height:1.6;">
+                <li>Confirm meeting link through the host's official corporate directory or calendar.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Independence Panel (preserved) -->
+        <div style="margin-top:24px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:22px;" id="independencePanel">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;flex-wrap:wrap;gap:10px;">
+            <div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.06em;color:var(--cyan);margin-bottom:4px;">RULE C · EVIDENCE INDEPENDENCE CLUSTER</div>
+              <h3 style="font-size:16px;font-weight:700;">Participant Independence Analysis</h3>
+            </div>
+            <div style="background:var(--high-risk-bg);border:1px solid var(--high-risk-border);color:var(--high-risk);font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;padding:4px 8px;border-radius:4px;">
+              COLLAPSED: 4 ATTENDEES → 1 SOURCE
+            </div>
+          </div>
+          <p style="font-size:12.5px;color:var(--text-dim);line-height:1.5;margin-bottom:16px;">Under <strong style="color:var(--text-main);">Rule C</strong>, participants who share the same join origin count as <strong style="color:var(--text-main);">ONE</strong> evidence source. Verified-trust requires at least one independently verified participant.</p>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px;">
+            <div style="background:var(--bg-glass);border:1px solid var(--border);padding:10px;border-radius:var(--radius-sm);">
+              <div style="font-size:9px;color:var(--text-muted);font-family:'JetBrains Mono',monospace;">ATTENDEE 1</div>
+              <div style="font-size:12px;font-weight:700;margin:3px 0;">"VP of HR"</div>
+              <div style="font-size:10px;color:var(--text-muted);">Origin: Link #9821</div>
+              <div style="color:var(--review);font-size:10px;font-weight:600;margin-top:4px;">Vouches for Host</div>
+            </div>
+            <div style="background:var(--bg-glass);border:1px solid var(--border);padding:10px;border-radius:var(--radius-sm);">
+              <div style="font-size:9px;color:var(--text-muted);font-family:'JetBrains Mono',monospace;">ATTENDEE 2</div>
+              <div style="font-size:12px;font-weight:700;margin:3px 0;">"Compliance Lead"</div>
+              <div style="font-size:10px;color:var(--text-muted);">Origin: Link #9821</div>
+              <div style="color:var(--review);font-size:10px;font-weight:600;margin-top:4px;">Vouches for Host</div>
+            </div>
+            <div style="background:var(--bg-glass);border:1px solid var(--border);padding:10px;border-radius:var(--radius-sm);">
+              <div style="font-size:9px;color:var(--text-muted);font-family:'JetBrains Mono',monospace;">ATTENDEE 3</div>
+              <div style="font-size:12px;font-weight:700;margin:3px 0;">"Legal Officer"</div>
+              <div style="font-size:10px;color:var(--text-muted);">Origin: Link #9821</div>
+              <div style="color:var(--review);font-size:10px;font-weight:600;margin-top:4px;">Vouches for Host</div>
+            </div>
+            <div style="background:var(--bg-glass);border:1px solid var(--border);padding:10px;border-radius:var(--radius-sm);">
+              <div style="font-size:9px;color:var(--text-muted);font-family:'JetBrains Mono',monospace;">ATTENDEE 4</div>
+              <div style="font-size:12px;font-weight:700;margin:3px 0;">"Observer"</div>
+              <div style="font-size:10px;color:var(--text-muted);">Origin: Link #9821</div>
+              <div style="color:var(--review);font-size:10px;font-weight:600;margin-top:4px;">Vouches for Host</div>
+            </div>
+          </div>
+          <div style="background:var(--high-risk-bg);border-left:3px solid var(--high-risk);padding:10px 14px;font-size:12.5px;color:var(--text-dim);border-radius:0 var(--radius-sm) var(--radius-sm) 0;">
+            <strong style="color:var(--high-risk);">Rule C Verdict:</strong> 4 colluding guest accounts from shared origin <code style="font-size:11px;">Link #9821</code>. Total independent sources = 1. Verified-trust is <strong style="color:var(--high-risk);">BLOCKED</strong>.
+          </div>
+        </div>
+      </section>
+
+      <!-- ══ INCIDENT RECOVERY PAGE ══ -->
+      <section class="page-section" id="page-recovery" aria-label="Incident recovery">
+        <div class="card">
+          <div style="font-family:'JetBrains Mono',monospace;color:var(--high-risk);font-size:11px;margin-bottom:8px;letter-spacing:.06em;">PHASE 6 · RECOVERY AUTOMATION</div>
+          <h2 style="font-size:18px;font-weight:700;margin-bottom:6px;">Post-Incident Damage Mitigation &amp; Account Recovery</h2>
+          <p style="font-size:13px;color:var(--text-dim);margin-bottom:24px;">If you paid an upfront fee, downloaded suspicious software, or entered credentials into a phishing portal — initiate prioritized containment and generate regulatory complaint packets.</p>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="recType">Incident Type</label>
+              <select id="recType" class="form-select">
+                <option value="ADVANCE_FEE_PAID">Advance-Fee / Wire Fraud (Money Sent)</option>
+                <option value="CREDENTIAL_THEFT">Credential Phishing (Password/2FA Compromised)</option>
+                <option value="MALWARE_EXECUTED">Malware Executed (Screening Tool / Fake Software)</option>
+                <option value="IDENTITY_THEFT">Identity Harvesting (SSN / Passport Submitted)</option>
+                <option value="SESSION_HIJACK">Session Hijack (Cookie / Account Takeover)</option>
+                <option value="OFF_PLATFORM_EXTORTION">Off-Platform Extortion (Telegram / Threat)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="recAmount">Financial Loss &amp; Currency</label>
+              <div style="display:flex;gap:8px;">
+                <input type="number" id="recAmount" class="form-input" placeholder="Amount (e.g. 1500)" style="flex:2;">
+                <select id="recCurrency" class="form-select" style="flex:1;">
+                  <option value="USD">USD ($)</option>
+                  <option value="GBP">GBP (£)</option>
+                  <option value="EUR">EUR (€)</option>
+                  <option value="INR">INR (₹)</option>
+                  <option value="AED">AED</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form-row" style="margin-top:12px;">
+            <div class="form-group">
+              <label class="form-label" for="recAccounts">Compromised Assets / Accounts</label>
+              <input type="text" id="recAccounts" class="form-input" placeholder="e.g. Chase Bank, Gmail, SSN, LinkedIn">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="recScammer">Scammer Details (Emails / Phones / Websites)</label>
+              <input type="text" id="recScammer" class="form-input" placeholder="e.g. hr@fake-portal.biz, +1-555-0199">
+            </div>
+          </div>
+          <div class="form-group" style="margin-top:12px;">
+            <label class="form-label" for="recDescription">Description</label>
+            <textarea id="recDescription" class="form-textarea" placeholder="Briefly describe what happened…" rows="3"></textarea>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;margin-top:16px;flex-wrap:wrap;">
+            <button class="btn-danger" id="btnInitiateRecovery">🚨 Initiate Automated Recovery Workflow →</button>
+            <span id="recStatus" style="font-size:13px;color:var(--text-dim);"></span>
+          </div>
+        </div>
+
+        <!-- Recovery Result -->
+        <div class="rec-result-card" id="recResultCard">
+          <div class="rec-banner">
+            <div>
+              <span class="rec-badge" id="recSeverityBadge">CRITICAL SEVERITY</span>
+              <span style="margin-left:12px;font-size:12px;font-family:'JetBrains Mono',monospace;color:var(--text-dim);" id="recUrgencyText">URGENCY: IMMEDIATE</span>
+            </div>
+            <div style="text-align:right;">
+              <span style="font-size:10px;color:var(--text-muted);">PLAN ID: </span>
+              <span class="mono" id="recPlanId" style="color:var(--cyan);">rec-00000000</span>
+            </div>
+          </div>
+          <div class="rec-directives">
+            <h4>🚨 IMMEDIATE CONTAINMENT DIRECTIVES</h4>
+            <ul id="recDirectivesList"></ul>
+          </div>
+          <div class="rec-steps-container">
+            <div class="rec-steps-header">
+              <span>PRIORITIZED ACTIONS (<span id="recStepsCompleted">0</span>/<span id="recStepsTotal">0</span> COMPLETED)</span>
+              <span>EST. <span id="recEstMinutes">25</span> MIN</span>
+            </div>
+            <div class="rec-progress-bar"><div class="rec-progress-fill" id="recProgressFill"></div></div>
+            <div id="recStepsList"></div>
+          </div>
+          <div class="regulatory-actions">
+            <div style="width:100%;font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--text-muted);margin-bottom:6px;">COMPLAINT DRAFTS (MANUAL SUBMISSION REQUIRED):</div>
+            <button class="btn-report" onclick="downloadReport('FBI_IC3')">🏛️ FBI IC3 Packet</button>
+            <button class="btn-report" onclick="downloadReport('FTC')">🛡️ FTC Report</button>
+            <button class="btn-report" onclick="downloadReport('ACTION_FRAUD_UK')">🇬🇧 UK Action Fraud</button>
+            <button class="btn-report" onclick="downloadReport('NCRP_INDIA')">🇮🇳 India NCRP</button>
+            <div style="width:100%;font-size:11px;color:var(--text-muted);margin-top:8px;line-height:1.5;">LifeLens Ω prepares formatted complaint packets for your review. It does not file reports automatically.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══ SRE CONSOLE PAGE ══ -->
+      <section class="page-section" id="page-sre" aria-label="SRE and observability console">
+        <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:20px;flex-wrap:wrap;gap:14px;">
+          <div>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.08em;color:var(--cyan);margin-bottom:6px;">PRODUCTION SRE TOOLING (§70–§76)</div>
+            <h2 style="font-size:18px;font-weight:700;">🩺 System Observability &amp; SRE Sentinel</h2>
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <button class="sre-btn sre-btn-primary" id="btnRunAudit" onclick="runSentinelAudit()">⚡ Run Sentinel Audit</button>
+            <button class="sre-btn sre-btn-warn" id="btnChaosToggle" onclick="toggleChaosDrill()">🧪 Resiliency Drill</button>
+            <button class="sre-btn" id="btnResetChaos" onclick="resetChaosDrill()">🔄 Reset &amp; Auto-Heal</button>
+          </div>
+        </div>
+        <div class="sre-kpi-grid">
+          <div class="sre-kpi-card">
+            <div class="sre-kpi-label">SYSTEM READINESS</div>
+            <div class="sre-kpi-val" id="sreOverallStatus" style="color:var(--verified);">HEALTHY</div>
+            <div class="sre-kpi-sub" id="sreUptimeText">Uptime: 99.98% (SLA Met)</div>
+          </div>
+          <div class="sre-kpi-card">
+            <div class="sre-kpi-label">TOTAL REQUESTS</div>
+            <div class="sre-kpi-val" id="sreReqCount">0</div>
+            <div class="sre-kpi-sub" id="sreSuccessRate">Success Rate: 100%</div>
+          </div>
+          <div class="sre-kpi-card">
+            <div class="sre-kpi-label">P95 LATENCY (SLA &lt; 1.0s)</div>
+            <div class="sre-kpi-val" id="sreP95Latency">—</div>
+            <div class="sre-kpi-sub" id="sreP50Latency">p50: — · p99: —</div>
+          </div>
+          <div class="sre-kpi-card">
+            <div class="sre-kpi-label">ACTIVE ALERTS</div>
+            <div class="sre-kpi-val" id="sreAlertsStatus" style="color:var(--verified);font-size:14px;">0 FIRING</div>
+            <div class="sre-kpi-sub">Prometheus alert rules</div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:14px;">
+          <div class="sre-panel">
+            <div class="sre-panel-title">SUBSYSTEM LIVENESS &amp; READINESS PROBES</div>
+            <div id="sreSubsystemsList">
+              <div class="sre-item-row"><span>API Gateway Router</span><span class="sre-badge healthy">HEALTHY</span></div>
+              <div class="sre-item-row"><span>Database Connection Pool</span><span class="sre-badge healthy">HEALTHY</span></div>
+              <div class="sre-item-row"><span>Redis Cache Cluster</span><span class="sre-badge healthy">HEALTHY</span></div>
+              <div class="sre-item-row"><span>ML Inference Engines</span><span class="sre-badge healthy">WARMED</span></div>
+              <div class="sre-item-row"><span>Privacy Sandbox</span><span class="sre-badge healthy">ENFORCED</span></div>
+            </div>
+          </div>
+          <div class="sre-panel">
+            <div class="sre-panel-title">REGISTRY QUALITY GATES &amp; CIRCUIT BREAKERS (§76)</div>
+            <div id="sreAdaptersList">
+              <div class="sre-item-row"><span>Companies House (UK)</span><span class="sre-badge healthy">HEALTHY · ACTIVE</span></div>
+              <div class="sre-item-row"><span>SEC EDGAR (US)</span><span class="sre-badge healthy">HEALTHY · ACTIVE</span></div>
+              <div class="sre-item-row"><span>MCA Registry (India)</span><span class="sre-badge healthy">HEALTHY · ACTIVE</span></div>
+              <div class="sre-item-row"><span>NER Registry (UAE)</span><span class="sre-badge healthy">HEALTHY · ACTIVE</span></div>
+              <div class="sre-item-row"><span>Domain &amp; WHOIS</span><span class="sre-badge healthy">HEALTHY · ACTIVE</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="sre-footer-bar">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-dim);">ACTIVE ALERTS:</span>
+            <span id="sreAlertsFooter" class="mono" style="color:var(--verified);font-size:12px;">0 FIRING (ALL RULES OK)</span>
+          </div>
+          <div style="display:flex;gap:14px;font-size:12px;font-family:'JetBrains Mono',monospace;flex-wrap:wrap;">
+            <a href="http://localhost:8000/metrics" target="_blank" style="color:var(--blue);">↗ Prometheus /metrics</a>
+            <a href="http://localhost:8000/api/v1/sre/health" target="_blank" style="color:var(--blue);">↗ Deep Health Probe</a>
+            <a href="http://localhost:3000" target="_blank" style="color:var(--cyan);">↗ Grafana Dashboard</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══ SETTINGS PAGE ══ -->
+      <section class="page-section" id="page-settings" aria-label="Settings and privacy">
+        <div class="settings-layout">
+          <!-- Menu -->
+          <div class="settings-menu">
+            <div class="settings-menu-item active" data-settings-tab="appearance">🎨 Appearance</div>
+            <div class="settings-menu-item" data-settings-tab="notifications">🔔 Notifications</div>
+            <div class="settings-menu-item" data-settings-tab="privacy">🔒 Privacy &amp; Security</div>
+            <div class="settings-menu-item" data-settings-tab="data">📊 Data &amp; Analytics</div>
+            <div class="settings-menu-item" data-settings-tab="accessibility">♿ Accessibility</div>
+          </div>
+
+          <!-- Panels -->
+          <div class="settings-panel">
+
+            <!-- Appearance -->
+            <div class="settings-section" id="settings-appearance">
+              <div class="settings-section-title">Appearance</div>
+              <div class="settings-row">
+                <div>
+                  <div class="settings-row-label">Theme</div>
+                  <div class="settings-row-desc">Choose your preferred colour scheme</div>
+                </div>
+                <div class="theme-btns">
+                  <button class="theme-btn" data-theme-btn="light" id="themeBtnLight">☀️ Light</button>
+                  <button class="theme-btn active" data-theme-btn="dark" id="themeBtnDark">🌙 Dark</button>
+                  <button class="theme-btn" data-theme-btn="system" id="themeBtnSystem">💻 System</button>
+                </div>
+              </div>
+              <div class="settings-row">
+                <div>
+                  <div class="settings-row-label">Accent Color</div>
+                  <div class="settings-row-desc">Customise the interface highlight colour</div>
+                </div>
+                <div class="accent-swatches">
+                  <div class="accent-swatch active" data-accent="#06B6D4" style="background:#06B6D4;" title="Cyan" tabindex="0" role="button" aria-label="Cyan accent"></div>
+                  <div class="accent-swatch" data-accent="#3B82F6" style="background:#3B82F6;" title="Blue" tabindex="0" role="button" aria-label="Blue accent"></div>
+                  <div class="accent-swatch" data-accent="#8B5CF6" style="background:#8B5CF6;" title="Violet" tabindex="0" role="button" aria-label="Violet accent"></div>
+                  <div class="accent-swatch" data-accent="#10B981" style="background:#10B981;" title="Green" tabindex="0" role="button" aria-label="Green accent"></div>
+                  <div class="accent-swatch" data-accent="#F59E0B" style="background:#F59E0B;" title="Amber" tabindex="0" role="button" aria-label="Amber accent"></div>
+                </div>
+              </div>
+              <div class="settings-row">
+                <div>
+                  <div class="settings-row-label">Text Size</div>
+                  <div class="settings-row-desc">Adjust interface text size</div>
+                </div>
+                <div class="text-size-btns">
+                  <button class="text-size-btn" data-size="small" aria-label="Small text">A</button>
+                  <button class="text-size-btn active" data-size="medium" aria-label="Medium text" style="font-size:16px;">A</button>
+                  <button class="text-size-btn" data-size="large" aria-label="Large text" style="font-size:18px;">A</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Privacy -->
+            <div class="settings-section" id="settings-privacy">
+              <div class="settings-section-title">Privacy &amp; Security</div>
+              <div class="settings-row">
+                <div>
+                  <div class="settings-row-label">Data Encryption</div>
+                  <div class="settings-row-desc">Encrypt all locally stored verification data</div>
+                </div>
+                <label class="toggle" aria-label="Data encryption toggle">
+                  <input type="checkbox" id="toggleEncryption" checked>
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+              <div class="settings-row">
+                <div>
+                  <div class="settings-row-label">Data Sync</div>
+                  <div class="settings-row-desc">Sync verification history across devices</div>
+                </div>
+                <label class="toggle" aria-label="Data sync toggle">
+                  <input type="checkbox" id="toggleSync">
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+              <div class="settings-row">
+                <div>
+                  <div class="settings-row-label">Anonymous Mode</div>
+                  <div class="settings-row-desc">Don't associate searches with your account</div>
+                </div>
+                <label class="toggle" aria-label="Anonymous mode toggle">
+                  <input type="checkbox" id="toggleAnon">
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Notifications -->
+            <div class="settings-section" id="settings-notifications">
+              <div class="settings-section-title">Notifications</div>
+              <div class="settings-row">
+                <div>
+                  <div class="settings-row-label">In-app Notifications</div>
+                  <div class="settings-row-desc">Show notifications inside the application</div>
+                </div>
+                <label class="toggle" aria-label="In-app notifications toggle">
+                  <input type="checkbox" id="toggleInAppNotif" checked>
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+              <div class="settings-row">
+                <div>
+                  <div class="settings-row-label">Security Alerts</div>
+                  <div class="settings-row-desc">Alert on high-risk verification results</div>
+                </div>
+                <label class="toggle" aria-label="Security alerts toggle">
+                  <input type="checkbox" id="toggleSecAlerts" checked>
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Data & Analytics -->
+            <div class="settings-section" id="settings-data">
+              <div class="settings-section-title">Data &amp; Analytics</div>
+              <div class="settings-row">
+                <div>
+                  <div class="settings-row-label">Daily Insights</div>
+                  <div class="settings-row-desc">Show daily verification summary on dashboard</div>
+                </div>
+                <label class="toggle" aria-label="Daily insights toggle">
+                  <input type="checkbox" id="toggleDailyInsights" checked>
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+              <div class="settings-row">
+                <div>
+                  <div class="settings-row-label">Weekly Reports</div>
+                  <div class="settings-row-desc">Generate weekly verification activity report</div>
+                </div>
+                <label class="toggle" aria-label="Weekly reports toggle">
+                  <input type="checkbox" id="toggleWeeklyReports">
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+    </div><!-- /page-body -->
+  </div><!-- /main-content -->
+</div><!-- /app -->
+
+
+<!-- ═══════════════════════════════════════════════
+     SCRIPTS
+═══════════════════════════════════════════════ -->
+<script src="app.js" defer></script>
+
+</body>
+</html>

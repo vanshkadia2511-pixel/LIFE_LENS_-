@@ -1,0 +1,40 @@
+{
+  "manifest_version": 3,
+  "name": "LifeLens Ω — Job & Offer Verifier",
+  "version": "1.0.0",
+  "description": "Reality Integrity Intelligence: Verifies job postings and recruiter claims using independent evidence and CECT reasoning.",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "scripting",
+    "sidePanel"
+  ],
+  "side_panel": {
+    "default_path": "src/sidepanel/sidepanel.html"
+  },
+  "host_permissions": [
+    "http://localhost:8000/*",
+    "https://*/*"
+  ],
+  "action": {
+    "default_popup": "src/popup/popup.html",
+    "default_title": "LifeLens Ω Verification"
+  },
+  "background": {
+    "service_worker": "src/background/background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.linkedin.com/*",
+        "*://*.indeed.com/*",
+        "*://*.glassdoor.com/*",
+        "*://*/*jobs*",
+        "*://*/*careers*"
+      ],
+      "js": ["src/content/content_script.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}

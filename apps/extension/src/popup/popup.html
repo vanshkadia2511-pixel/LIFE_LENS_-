@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LifeLens Ω Verifier</title>
+  <link rel="stylesheet" href="popup.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="header">
+      <div class="brand">
+        <div class="logo-orb">Ω</div>
+        <div class="brand-text">
+          <span class="brand-title">LifeLens Ω</span>
+          <span class="brand-subtitle">Reality Integrity Platform</span>
+        </div>
+      </div>
+      <div id="statusIndicator" class="status-badge status-ready">Ready</div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- Input Section -->
+      <section id="inputSection" class="card input-card">
+        <div class="card-header">
+          <h3>Target Job & Recruiter Details</h3>
+          <button id="btnAutoExtract" class="btn-ghost" title="Re-extract from current page">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+            </svg>
+            Auto-Detect
+          </button>
+        </div>
+
+        <form id="verifyForm">
+          <div class="form-group">
+            <label for="jobTitle">Job Title</label>
+            <input type="text" id="jobTitle" placeholder="e.g. Senior Software Engineer" />
+          </div>
+
+          <div class="form-row">
+            <div class="form-group flex-1">
+              <label for="companyName">Company Name</label>
+              <input type="text" id="companyName" placeholder="e.g. Acme Corp" />
+            </div>
+            <div class="form-group flex-1">
+              <label for="claimedCountry">Country</label>
+              <select id="claimedCountry">
+                <option value="GB">United Kingdom (GB)</option>
+                <option value="US">United States (US)</option>
+                <option value="IN">India (IN)</option>
+                <option value="AE">UAE (AE)</option>
+                <option value="SG">Singapore (SG)</option>
+                <option value="OTHER">Other / Global</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group flex-1">
+              <label for="companyWebsite">Official Website</label>
+              <input type="url" id="companyWebsite" placeholder="e.g. acme.com" />
+            </div>
+            <div class="form-group flex-1">
+              <label for="recruiterEmail">Recruiter Email</label>
+              <input type="email" id="recruiterEmail" placeholder="e.g. hr@acme.com" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="jobDescription">Job Description & Claims Snippet</label>
+            <textarea id="jobDescription" rows="3" placeholder="Paste recruiter message, compensation, visa claims, or fee requests..."></textarea>
+          </div>
+
+          <div class="consent-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="consentCheckbox" checked />
+              <span>I consent to verify this job info via LifeLens Ω (§35)</span>
+            </label>
+          </div>
+
+          <button type="submit" id="btnVerify" class="btn-primary">
+            <span class="btn-text">Verify Reality Integrity</span>
+            <div class="spinner" id="verifySpinner"></div>
+          </button>
+        </form>
+      </section>
+
+      <!-- Results View -->
+      <section id="resultsSection" class="results-container hidden">
+        <!-- Risk Banner -->
+        <div id="riskBanner" class="risk-banner">
+          <div class="risk-header">
+            <div class="risk-pill-wrapper">
+              <span id="riskLevelPill" class="risk-pill risk-low">LOW RISK</span>
+              <span id="confidencePill" class="confidence-pill">CONFIDENCE: HIGH</span>
+            </div>
+            <div class="score-display">
+              <span class="score-label">Integrity Score</span>
+              <span id="integrityScore" class="score-value">0.85</span>
+            </div>
+          </div>
+          <p id="summaryHeadline" class="summary-headline">Company identity is officially registered and verified.</p>
+        </div>
+
+        <!-- CECT Breakdown Grid -->
+        <div class="card cect-card">
+          <h4>CECT Multi-Dimensional Analysis (§14)</h4>
+          <div class="cect-grid">
+            <div class="cect-metric">
+              <div class="metric-top">
+                <span class="metric-label">Coherence (C)</span>
+                <span id="coherenceScoreVal" class="metric-val">100%</span>
+              </div>
+              <div class="progress-track"><div id="coherenceBar" class="progress-fill" style="width: 100%"></div></div>
+            </div>
+
+            <div class="cect-metric">
+              <div class="metric-top">
+                <span class="metric-label">Evidence Indep. (E)</span>
+                <span id="evidenceScoreVal" class="metric-val">90%</span>
+              </div>
+              <div class="progress-track"><div id="evidenceBar" class="progress-fill" style="width: 90%"></div></div>
+            </div>
+
+            <div class="cect-metric">
+              <div class="metric-top">
+                <span class="metric-label">Consistency (C2)</span>
+                <span id="consistencyScoreVal" class="metric-val">85%</span>
+              </div>
+              <div class="progress-track"><div id="consistencyBar" class="progress-fill" style="width: 85%"></div></div>
+            </div>
+
+            <div class="cect-metric">
+              <div class="metric-top">
+                <span class="metric-label">Trajectory (T)</span>
+                <span id="trajectoryScoreVal" class="metric-val">80%</span>
+              </div>
+              <div class="progress-track"><div id="trajectoryBar" class="progress-fill" style="width: 80%"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Risk Signals & Concerns -->
+        <div id="signalsCard" class="card signals-card">
+          <h4>Primary Risk Signals</h4>
+          <ul id="signalsList" class="bullet-list"></ul>
+        </div>
+
+        <!-- Safe Next Actions (§21, §22) -->
+        <div class="card actions-card">
+          <h4>Recommended Safe Verification Path</h4>
+          <ul id="nextStepsList" class="steps-list"></ul>
+        </div>
+
+        <!-- Evidence Provenance Cards (§13) -->
+        <div class="card provenance-card">
+          <div class="card-header">
+            <h4>Auditable Evidence Ledger</h4>
+            <span id="evidenceCount" class="badge-count">3 Sources</span>
+          </div>
+          <div id="evidenceCardsList" class="evidence-list"></div>
+        </div>
+
+        <!-- Reset Button -->
+        <button id="btnReset" class="btn-secondary">Check Another Job</button>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <span>LifeLens Ω v2.0 • Phase 1 MVP</span>
+      <a href="http://localhost:8000/docs" target="_blank" class="footer-link">API Docs</a>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

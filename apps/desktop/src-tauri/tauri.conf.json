@@ -1,0 +1,33 @@
+{
+  "build": {
+    "beforeDevCommand": "",
+    "beforeBuildCommand": "",
+    "devPath": "../src",
+    "distDir": "../src"
+  },
+  "package": {
+    "productName": "LifeLensOmegaDesktopGuard",
+    "version": "2.0.0"
+  },
+  "tauri": {
+    "windows": [
+      {
+        "title": "LifeLens Ω — Desktop Call Guard HUD",
+        "width": 460,
+        "height": 660,
+        "resizable": true,
+        "alwaysOnTop": true,
+        "decorations": true,
+        "transparent": false
+      }
+    ],
+    "bundle": {
+      "active": true,
+      "identifier": "ai.lifelens.desktopguard",
+      "icon": []
+    },
+    "security": {
+      "csp": "default-src 'self' http://localhost:8000; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com"
+    }
+  }
+}

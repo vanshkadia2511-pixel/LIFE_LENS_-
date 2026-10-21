@@ -9,7 +9,7 @@ Run specific test: pytest tests/test_core.py::TestCoherenceAnalyzer -v
 
 import pytest
 import json
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import List, Tuple
 import numpy as np
 from unittest.mock import Mock, patch, MagicMock
@@ -144,7 +144,7 @@ def romance_scam_progression(attacker_entity, user_entity):
             target_entity=user_entity,
             source_channel="WhatsApp",
             raw_content=message,
-            timestamp=datetime.utcnow() - timedelta(days=7-i)
+            timestamp=datetime.now(timezone.utc) - timedelta(days=7-i)
         )
         events.append(event)
     
@@ -268,7 +268,7 @@ class TestBehavioralConsistencyScorer:
             event_type=EventType.MESSAGE,
             source_entity=legitimate_entity,
             raw_content="Hey, how are you doing?",
-            timestamp=datetime.utcnow()
+            timestamp=datetime.now(timezone.utc)
         )
         
         result = scorer.analyze(event)

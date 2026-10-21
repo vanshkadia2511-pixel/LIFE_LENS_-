@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LifeLens Ω Call Guardian</title>
+  <link rel="stylesheet" href="sidepanel.css">
+</head>
+<body>
+  <div class="panel-container">
+    <header class="panel-header">
+      <div class="header-stamp">LIFELENS Ω</div>
+      <h1 class="header-title">Call Guardian</h1>
+      <p class="header-subtitle">Layer 0 Pre-Call Link & Invite Inspector</p>
+    </header>
+
+    <div class="notice-banner">
+      <strong>Metadata Only (§P5):</strong> Call Guardian inspects invite links and metadata. It never connects, joins, or records meeting streams.
+    </div>
+
+    <form id="invite-form" class="panel-form">
+      <div class="form-group">
+        <label for="invite-url">Meeting Invite URL</label>
+        <input type="url" id="invite-url" placeholder="https://zoom.us/j/... or https://meet.google.com/..." required />
+      </div>
+
+      <div class="form-row">
+        <div class="form-group half">
+          <label for="platform-hint">Platform</label>
+          <select id="platform-hint">
+            <option value="">Auto-Detect</option>
+            <option value="zoom">Zoom</option>
+            <option value="meet">Google Meet</option>
+            <option value="teams">Microsoft Teams</option>
+            <option value="webex">Cisco Webex</option>
+            <option value="telegram">Telegram</option>
+            <option value="whatsapp">WhatsApp</option>
+          </select>
+        </div>
+
+        <div class="form-group half">
+          <label for="channel">Arrival Channel</label>
+          <select id="channel">
+            <option value="corporate_calendar">Calendar Invite</option>
+            <option value="verified_email">Corporate Email</option>
+            <option value="slack">Workplace Slack</option>
+            <option value="telegram_dm">Telegram DM</option>
+            <option value="whatsapp_unknown_number">WhatsApp (Unknown Number)</option>
+            <option value="unknown_sms">SMS / Text Message</option>
+            <option value="social_dm">Social Media DM</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="host-email">Claimed Host Email (Optional)</label>
+        <input type="email" id="host-email" placeholder="e.g. recruiter@company.com" />
+      </div>
+
+      <div class="form-group">
+        <label for="message-context">Accompanying Message / Phrasing (Optional)</label>
+        <textarea id="message-context" rows="2" placeholder="e.g. 'Urgent summons: join this video link immediately'"></textarea>
+      </div>
+
+      <div class="consent-box">
+        <input type="checkbox" id="consent-flag" />
+        <label for="consent-flag">I consent to inspecting this link metadata locally with LifeLens Ω (§P5 / §P6).</label>
+      </div>
+
+      <button type="submit" id="inspect-btn" class="inspect-btn">Inspect Meeting Invite</button>
+    </form>
+
+    <div id="results-panel" class="results-panel hidden">
+      <div class="stamp-seal" id="verdict-seal">VERDICT</div>
+      <div class="result-summary">
+        <div class="verdict-label" id="verdict-text">-</div>
+        <div class="score-display">Risk Score: <span id="risk-score-value">0.0</span></div>
+      </div>
+
+      <div class="provenance-section">
+        <h3>Signals & Provenance</h3>
+        <div id="signals-list" class="signals-list"></div>
+      </div>
+
+      <div class="recommendations-section">
+        <h3>Out-of-Band Guidance (§P6)</h3>
+        <ul id="recommendations-list"></ul>
+      </div>
+    </div>
+  </div>
+
+  <script src="sidepanel.js"></script>
+</body>
+</html>

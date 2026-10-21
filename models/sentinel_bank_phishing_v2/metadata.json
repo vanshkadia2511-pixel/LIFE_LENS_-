@@ -1,0 +1,145 @@
+{
+  "label": "MEASURED",
+  "dataset_file": "datasets/job_scam_text/indian_scam_multiclass/sentinel_dataset_multiclass.csv",
+  "dataset_sha256": "ebdec640f5d81a0e368aa6607579aad963881c57e16be4719b9791f581441d1d",
+  "rows_after_cleaning": 14000,
+  "positive_rate": 0.1339,
+  "split": {
+    "method": "StratifiedGroupKFold(5, shuffle, seed=42); fold0=test, fold1=validation, folds2-4=train",
+    "near_duplicate_threshold": 0.9,
+    "group_col": null,
+    "domain_extractor": null,
+    "groups": 8156,
+    "sizes": {
+      "train": 8402,
+      "validation": 2797,
+      "test": 2801
+    }
+  },
+  "features": {
+    "analyzer": "word",
+    "ngram_range": [
+      1,
+      2
+    ],
+    "max_features": 50000
+  },
+  "calibration": "none",
+  "tuning": {
+    "c_grid": [
+      {
+        "C": 0.1,
+        "val_pr_auc": 0.9625
+      },
+      {
+        "C": 1.0,
+        "val_pr_auc": 0.9693
+      },
+      {
+        "C": 10.0,
+        "val_pr_auc": 0.9758
+      }
+    ],
+    "chosen_C": 10.0
+  },
+  "threshold": {
+    "threshold": 0.04032021635618198,
+    "val_precision": 0.9016,
+    "val_recall": 0.9305
+  },
+  "test_metrics": {
+    "n": 2801,
+    "positives": 375,
+    "threshold": 0.0403,
+    "precision": 0.8188,
+    "recall": 1.0,
+    "f1": 0.9004,
+    "fpr": 0.0342,
+    "pr_auc": 0.9965,
+    "roc_auc": 0.9994,
+    "confusion": {
+      "tn": 2343,
+      "fp": 83,
+      "fn": 0,
+      "tp": 375
+    },
+    "bootstrap": {
+      "f1_95ci": [
+        0.8793,
+        0.9207
+      ],
+      "pr_auc_95ci": [
+        0.9941,
+        0.9983
+      ],
+      "resamples_used": 1000
+    },
+    "base_rate_reweighted": {
+      "assumed_positive_rate": 0.05,
+      "precision": 0.606,
+      "recall": 1.0,
+      "fpr": 0.0342,
+      "false_alerts_per_1000_legitimate": 34.21,
+      "caveat": "Importance-weighted estimate under a prior-shift assumption: per-class score behaviour is assumed unchanged at the new base rate. Confirm with a real sample from the target population."
+    }
+  },
+  "error_counts_test": {
+    "false_positives_exported": 25,
+    "false_negatives_exported": 0
+  },
+  "external": {},
+  "top_features": {
+    "toward_positive_class": [
+      "kyc",
+      "account",
+      "your account",
+      "bank",
+      "the otp",
+      "net",
+      "verify",
+      "detected",
+      "due to",
+      "on your",
+      "at",
+      "transaction of",
+      "grant",
+      "restore",
+      "transaction",
+      "india security",
+      "share the",
+      "cancel",
+      "to restore",
+      "hdfc"
+    ],
+    "toward_negative_class": [
+      "pnb",
+      "at pnb",
+      "for",
+      "rs",
+      "pnb transaction",
+      "with",
+      "pnb visa",
+      "pnb card",
+      "pnb fraud",
+      "app",
+      "you",
+      "balance",
+      "baroda security",
+      "your pnb",
+      "may",
+      "anyone",
+      "minutes",
+      "with anyone",
+      "via",
+      "valid"
+    ]
+  },
+  "environment": {
+    "python": "3.12.13",
+    "sklearn": "1.9.1",
+    "numpy": "1.26.2",
+    "pandas": "3.0.6",
+    "tldextract": "5.1.2"
+  },
+  "created_utc": "2026-10-13T11:04:49+00:00"
+}

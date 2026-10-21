@@ -1,0 +1,525 @@
+/* LifeLens Ω — Desktop Call Guard Passport Control CSS */
+:root {
+  --ink: #1B2A4A;
+  --paper: #F7F5F0;
+  --paper-card: #FFFFFF;
+  --paper-subtle: #EFECE5;
+  --graphite: #2A2A28;
+  --graphite-muted: #5A5A58;
+  --border: #D5D2C8;
+  --stamp-red: #B8433D;
+  --stamp-green: #3D6B4F;
+  --stamp-amber: #9C6B1F;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--paper);
+  color: var(--graphite);
+  line-height: 1.45;
+  padding: 16px;
+  font-size: 13px;
+  user-select: none;
+}
+
+.hud-container {
+  max-width: 428px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.mono-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: var(--graphite-muted);
+}
+
+.mono-latency {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--stamp-green);
+  font-weight: 600;
+}
+
+/* Header */
+.hud-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 10px;
+}
+
+.hud-stamp {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--ink);
+  border: 1px solid var(--ink);
+  padding: 2px 5px;
+  display: inline-block;
+  margin-bottom: 3px;
+}
+
+.hud-title {
+  font-family: 'Fraunces', serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.guard-pill {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 2px;
+  letter-spacing: 0.05em;
+  border: 1px solid;
+}
+
+.pill-off {
+  background-color: var(--paper-subtle);
+  color: var(--graphite-muted);
+  border-color: var(--border);
+}
+
+.pill-on {
+  background-color: #E6EFE9;
+  color: var(--stamp-green);
+  border-color: var(--stamp-green);
+}
+
+/* Cards */
+.control-card,
+.stream-card,
+.coach-bar,
+.receipt-card {
+  background-color: var(--paper-card);
+  border: 1px solid var(--border);
+  padding: 14px;
+  border-radius: 2px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 10px;
+}
+
+label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--graphite-muted);
+  text-transform: uppercase;
+}
+
+select {
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  background-color: var(--paper);
+  color: var(--graphite);
+  font-size: 12px;
+}
+
+.consent-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  background-color: var(--paper-subtle);
+  border: 1px dashed var(--border);
+  padding: 10px;
+  font-size: 11px;
+  margin-bottom: 12px;
+  color: var(--graphite);
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.btn {
+  padding: 9px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 2px;
+  cursor: pointer;
+  border: 1px solid;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.btn-start {
+  background-color: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+  flex: 1;
+}
+
+.btn-start:hover {
+  background-color: #243862;
+}
+
+.btn-stop {
+  background-color: var(--stamp-red);
+  color: var(--paper);
+  border-color: var(--stamp-red);
+  flex: 1;
+}
+
+.btn-stop:hover {
+  background-color: #9E3732;
+}
+
+.btn-primary {
+  background-color: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+
+.btn-secondary {
+  background-color: var(--paper-subtle);
+  color: var(--graphite);
+  border-color: var(--border);
+}
+
+.btn-danger {
+  background-color: var(--stamp-red);
+  color: var(--paper);
+  border-color: var(--stamp-red);
+}
+
+.btn-mini {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  padding: 3px 6px;
+  background: var(--paper-subtle);
+  border: 1px solid var(--border);
+  cursor: pointer;
+}
+
+/* Stream Card */
+.stream-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 6px;
+}
+
+.transcript-feed {
+  height: 120px;
+  overflow-y: auto;
+  background-color: var(--paper);
+  border: 1px solid var(--border);
+  padding: 8px 10px;
+  font-size: 12px;
+  line-height: 1.4;
+  margin-bottom: 10px;
+}
+
+.feed-placeholder {
+  color: var(--graphite-muted);
+  font-style: italic;
+  font-size: 11px;
+}
+
+.transcript-line {
+  margin-bottom: 6px;
+  padding-bottom: 4px;
+  border-bottom: 1px dotted var(--border);
+}
+
+.transcript-line.alert {
+  background-color: #FDF2F2;
+  border-left: 3px solid var(--stamp-red);
+  padding: 4px 6px;
+}
+
+.test-injector label {
+  font-size: 10px;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.injector-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.btn-chip {
+  font-size: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  padding: 4px 7px;
+  background-color: var(--paper-subtle);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  color: var(--graphite);
+}
+
+.btn-chip:hover {
+  background-color: #E2DFD6;
+}
+
+/* Coach Bar */
+.coach-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.coach-drawer {
+  margin-top: 10px;
+  border-top: 1px solid var(--border);
+  padding-top: 10px;
+}
+
+.coach-guidance {
+  font-size: 11px;
+  color: var(--graphite-muted);
+  margin-bottom: 8px;
+}
+
+.challenges-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.challenge-item {
+  padding: 8px;
+  background-color: var(--paper);
+  border-left: 3px solid var(--ink);
+  font-size: 11.5px;
+}
+
+.challenge-instruction {
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.challenge-rationale {
+  font-size: 10px;
+  color: var(--graphite-muted);
+}
+
+/* Interstitial Modal */
+.interstitial-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(27, 42, 74, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 16px;
+}
+
+.interstitial-card {
+  background-color: var(--paper);
+  border: 2px solid var(--stamp-red);
+  max-width: 410px;
+  width: 100%;
+  padding: 20px;
+  position: relative;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+}
+
+.stamp-alert {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 900;
+  font-size: 12px;
+  color: var(--stamp-red);
+  border: 2px solid var(--stamp-red);
+  padding: 4px 8px;
+  transform: rotate(-5deg);
+}
+
+.interstitial-title {
+  font-family: 'Fraunces', serif;
+  font-size: 22px;
+  color: var(--stamp-red);
+  margin-bottom: 6px;
+}
+
+.interstitial-warning {
+  font-size: 12px;
+  font-weight: 500;
+  margin-bottom: 14px;
+  color: var(--graphite);
+}
+
+.cooling-timer {
+  background-color: #FDF2F2;
+  border: 1px solid #F5C6C6;
+  padding: 10px;
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+.timer-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--stamp-red);
+  font-weight: 700;
+}
+
+.timer-digits {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--stamp-red);
+  margin: 4px 0;
+}
+
+.timer-sub {
+  font-size: 10.5px;
+  color: var(--graphite-muted);
+}
+
+.checklist-section h3 {
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--graphite-muted);
+  margin-bottom: 6px;
+}
+
+.checklist-items {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.checklist-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 11.5px;
+  background-color: var(--paper-card);
+  padding: 8px;
+  border: 1px solid var(--border);
+}
+
+.checklist-item input {
+  margin-top: 2px;
+}
+
+.code-word-box {
+  background-color: var(--paper-subtle);
+  border: 1px dashed var(--border);
+  padding: 8px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.code-word-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--graphite-muted);
+}
+
+.code-word-val {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.interstitial-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Post-Call Receipt */
+.receipt-card {
+  position: relative;
+}
+
+.receipt-stamp {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 900;
+  font-size: 11px;
+  color: var(--stamp-green);
+  border: 2px solid var(--stamp-green);
+  padding: 4px 8px;
+  transform: rotate(-3deg);
+}
+
+.receipt-title {
+  font-family: 'Fraunces', serif;
+  font-size: 18px;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+
+.receipt-meta {
+  font-size: 11px;
+  color: var(--graphite-muted);
+  display: flex;
+  gap: 16px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 8px;
+  margin-bottom: 12px;
+}
+
+.receipt-block {
+  margin-bottom: 12px;
+}
+
+.receipt-block h3 {
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--graphite-muted);
+  margin-bottom: 4px;
+}
+
+.mono-hash {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  word-break: break-all;
+  background-color: var(--paper-subtle);
+  padding: 6px;
+  border: 1px solid var(--border);
+}
+
+.receipt-footer {
+  font-size: 10.5px;
+  color: var(--graphite-muted);
+  margin-top: 10px;
+  border-top: 1px solid var(--border);
+  padding-top: 8px;
+}
+
+.hidden {
+  display: none !important;
+}

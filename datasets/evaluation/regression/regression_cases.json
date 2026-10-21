@@ -1,0 +1,97 @@
+[
+  {
+    "regression_id": "REG-001",
+    "bug_reference": "BUG-001",
+    "title": "Recognized third-party agency incorrectly triggers SIG_DOMAIN_MISMATCH false positive",
+    "description": "Legitimate headhunter (Hays) email used for a UK company posting — caused HIGH false positive before Issue A5 fix.",
+    "fix_version": "0.1.0",
+    "scenario": {
+      "id": "reg-001-hays-false-positive",
+      "job_title": "Software Engineer",
+      "company_name": "AstraZeneca PLC",
+      "company_website": "https://astrazeneca.com",
+      "recruiter_name": "Hays Consultant",
+      "recruiter_email": "consultant.77@hays.co.uk",
+      "claimed_country": "GB",
+      "job_description": "Senior Software Engineer role at AstraZeneca, represented by Hays Specialist Recruitment. Competitive base salary and benefits."
+    },
+    "expected_behavior": "Risk level must NOT be HIGH or CRITICAL. Domain mismatch signal must be suppressed for recognized Hays domain.",
+    "expected_risk_max": "MEDIUM"
+  },
+  {
+    "regression_id": "REG-002",
+    "bug_reference": "BUG-002",
+    "title": "UNAVAILABLE source status incorrectly converted to FRAUD signal",
+    "description": "When an external registry API fails (timeout), the system previously elevated risk to HIGH as if the company was unregistered. Fixed by treating UNAVAILABLE as inconclusive, not negative evidence.",
+    "fix_version": "0.1.0",
+    "scenario": {
+      "id": "reg-002-api-failure-not-fraud",
+      "job_title": "Marketing Manager",
+      "company_name": "BBC",
+      "company_website": "https://bbc.co.uk",
+      "recruiter_name": "BBC Marketing Recruiter",
+      "recruiter_email": "marketing.jobs@bbc.co.uk",
+      "claimed_country": "GB",
+      "job_description": "Digital Marketing Manager at BBC, covering all digital and social properties. Standard corporate role, BBC Media Centre, London."
+    },
+    "expected_behavior": "Even if registry adapter is simulated as unavailable, risk must not reach CRITICAL. Source status UNAVAILABLE should appear as explanation note only.",
+    "expected_risk_max": "MEDIUM"
+  },
+  {
+    "regression_id": "REG-003",
+    "bug_reference": "BUG-003",
+    "title": "Company with weak/new web presence incorrectly rated CRITICAL",
+    "description": "Newly incorporated companies with no web presence were flagged CRITICAL. The fix added MEDIUM confidence handling — absence of web data is a moderate signal, not certain fraud.",
+    "fix_version": "0.2.0",
+    "scenario": {
+      "id": "reg-003-new-company-not-critical",
+      "job_title": "Operations Assistant",
+      "company_name": "GreenPath Advisory Solutions Ltd",
+      "company_website": "https://greenpathadvisory.co.uk",
+      "recruiter_name": "Founder — CEO",
+      "recruiter_email": "hello@greenpathadvisory.co.uk",
+      "claimed_country": "GB",
+      "job_description": "Early-stage sustainability advisory firm seeking an operations assistant. No upfront fees, standard employment contract, UK-based. Work directly with the founding team."
+    },
+    "expected_behavior": "Risk should be MEDIUM at most — no payment requests, email domain matches website. Absence of registry data alone must not cause CRITICAL.",
+    "expected_risk_max": "MEDIUM"
+  },
+  {
+    "regression_id": "REG-004",
+    "bug_reference": "BUG-004",
+    "title": "Signal PAYMENT_REQUEST missing from scam-detecting pipeline for obfuscated 'training deposit'",
+    "description": "Jobs using 'training deposit', 'compliance transfer', or 'hardware bond' evaded PAYMENT_REQUEST detection. The extractor was updated to use semantic pattern matching beyond exact keywords.",
+    "fix_version": "0.2.0",
+    "scenario": {
+      "id": "reg-004-obfuscated-payment-detected",
+      "job_title": "Digital Operations Specialist",
+      "company_name": "FastTech Remote Services",
+      "company_website": "https://fasttech-remote.biz",
+      "recruiter_name": "Operations Lead",
+      "recruiter_email": "ops@fasttech-remote.biz",
+      "claimed_country": "US",
+      "job_description": "Work from home! Complete the mandatory onboarding compliance transfer of $150 before your hardware can be dispatched. Urgent — last 3 slots remaining."
+    },
+    "expected_behavior": "PAYMENT signal must be detected despite 'compliance transfer' language. Risk should be HIGH or CRITICAL.",
+    "expected_risk_min": "HIGH"
+  },
+  {
+    "regression_id": "REG-005",
+    "bug_reference": "BUG-005",
+    "title": "AuditEventDB metadata field collision causing SQLAlchemy conflict",
+    "description": "AuditEventDB.metadata conflicted with SQLAlchemy's reserved metadata attribute, causing an AttributeError on all persistence writes. Renamed to event_metadata.",
+    "fix_version": "0.2.0",
+    "scenario": {
+      "id": "reg-005-db-audit-persistence",
+      "job_title": "Security Researcher",
+      "company_name": "DeepMind Technologies Limited",
+      "company_website": "https://deepmind.google",
+      "recruiter_name": "DeepMind Security Team",
+      "recruiter_email": "security@deepmind.google",
+      "claimed_country": "GB",
+      "job_description": "AI safety and security research position. Full-time London hybrid role with competitive RSU package."
+    },
+    "expected_behavior": "Full pipeline must complete without SQLAlchemy AttributeError. Result must be persistable to the database and retrievable via the /verifications/{id} endpoint.",
+    "expected_risk_max": "MEDIUM"
+  }
+]

@@ -1,0 +1,26 @@
+text,y,score,pred
+kotak bank security: your account ending 3333 shows a suspicious login from an unrecognized device. confirm it was you or click to secure your account immediately.,0,0.9031471731560554,1
+"pnb security team: we received a request to change the email linked to your account. if not you, click immediately: pnb-secure.net/cancel",0,0.8992699585569791,1
+yes bank security: your account ending 3333 shows a suspicious login from an unrecognized device. confirm it was you or click to secure your account immediately.,0,0.8954946319163961,1
+kotak bank security: your account ending 0001 shows a suspicious login from an unrecognized device. confirm it was you or click to secure your account immediately.,0,0.8656145683295833,1
+yes bank security: your account ending 5555 shows a suspicious login from an unrecognized device. confirm it was you or click to secure your account immediately.,0,0.8401346421189055,1
+yes bank security: account ending 0001 shows a suspicious login from an unrecognized device. confirm it was you: yesbank-secure.in/confirm,0,0.8280764495327855,1
+indusind bank security: your account ending 5555 shows a suspicious login from an unrecognized device. confirm it was you or click to secure your account immediately.,0,0.8275787661094096,1
+indian overseas bank security: your account ending 7777 shows a suspicious login from an unrecognized device. confirm it was you or click to secure your account immediately.,0,0.7644408414369209,1
+indian overseas bank security: your account ending 0123 shows a suspicious login from an unrecognized device. confirm it was you or click to secure your account immediately.,0,0.7327069235687382,1
+amazon pay: your account has been locked due to multiple failed pin attempts. unlock it at amazonpay-unlock.in. failure to do so in 24 hours will result in permanent closure.,0,0.7231792043763331,1
+indian overseas bank security: your account ending 0001 shows a suspicious login from an unrecognized device. confirm it was you or click to secure your account immediately.,0,0.7216110036904293,1
+indusind bank security: account ending 0123 shows a suspicious login from an unrecognized device. confirm it was you: indusind-secure.in/confirm,0,0.6398996348340165,1
+sbi security: your account ending 0123 shows a suspicious login from an unrecognized device. confirm it was you or click to secure your account immediately.,0,0.6123287763463219,1
+"pnb fraud alert: a rs 75,000 transaction on your account ending 1111 is pending verification. approve or deny at pnb-transaction.in before it is processed.",0,0.5665186264818469,1
+"pnb fraud alert: a rs 25,000 transaction on your account ending 1111 is pending verification. approve or deny at pnb-transaction.in before it is processed.",0,0.5261234185884816,1
+"the kotak bank fraud desk is reversing a fraudulent debit of rs 40,000 from your account right now. to complete the reversal, provide the 6-digit confirmation code we sent.",0,0.5203607556916846,1
+bank of baroda security: account ending 1111 shows a suspicious login from an unrecognized device. confirm it was you: bankofbaroda-secure.in/confirm,0,0.5055052770269294,1
+"the kotak bank fraud desk is reversing a fraudulent debit of rs 2 lakh from your account right now. to complete the reversal, provide the 6-digit confirmation code we sent.",0,0.49601836792319726,1
+"the kotak bank fraud desk is reversing a fraudulent debit of rs 1 lakh from your account right now. to complete the reversal, provide the 6-digit confirmation code we sent.",0,0.49601836792319726,1
+"the yes bank fraud desk is reversing a fraudulent debit of rs 40,000 from your account right now. to complete the reversal, provide the 6-digit confirmation code we sent.",0,0.4923867071046582,1
+"the yes bank fraud desk is reversing a fraudulent debit of rs 20,000 from your account right now. to complete the reversal, provide the 6-digit confirmation code we sent.",0,0.47616454659857826,1
+"the indusind bank fraud desk is reversing a fraudulent debit of rs 40,000 from your account right now. to complete the reversal, provide the 6-digit confirmation code we sent.",0,0.4692037207288665,1
+"the yes bank fraud desk is reversing a fraudulent debit of rs 1 lakh from your account right now. to complete the reversal, provide the 6-digit confirmation code we sent.",0,0.46729704517745296,1
+"the indusind bank fraud desk is reversing a fraudulent debit of rs 20,000 from your account right now. to complete the reversal, provide the 6-digit confirmation code we sent.",0,0.4527986716012476,1
+"the indusind bank fraud desk is reversing a fraudulent debit of rs 1 lakh from your account right now. to complete the reversal, provide the 6-digit confirmation code we sent.",0,0.44366583437007767,1

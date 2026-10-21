@@ -1,0 +1,145 @@
+{
+  "label": "MEASURED",
+  "dataset_file": "datasets\\job_scam_text\\difraud\\train.jsonl",
+  "dataset_sha256": "ed64c355d9a571e675804e0d83b9b27d29b475fd4b6b9c96f20a0874db3b322c",
+  "rows_after_cleaning": 11430,
+  "positive_rate": 0.0419,
+  "split": {
+    "method": "StratifiedGroupKFold(5, shuffle, seed=42); fold0=test, fold1=validation, folds2-4=train",
+    "near_duplicate_threshold": 0.9,
+    "group_col": null,
+    "domain_extractor": null,
+    "groups": 10236,
+    "sizes": {
+      "train": 6858,
+      "validation": 2286,
+      "test": 2286
+    }
+  },
+  "features": {
+    "analyzer": "word",
+    "ngram_range": [
+      1,
+      2
+    ],
+    "max_features": 50000
+  },
+  "calibration": "CalibratedClassifierCV(cv=5)",
+  "tuning": {
+    "c_grid": [
+      {
+        "C": 0.1,
+        "val_pr_auc": 0.4652
+      },
+      {
+        "C": 1.0,
+        "val_pr_auc": 0.5474
+      },
+      {
+        "C": 10.0,
+        "val_pr_auc": 0.572
+      }
+    ],
+    "chosen_C": 10.0
+  },
+  "threshold": {
+    "threshold": 0.4012565451968588,
+    "val_precision": 0.9211,
+    "val_recall": 0.3646
+  },
+  "test_metrics": {
+    "n": 2286,
+    "positives": 96,
+    "threshold": 0.4013,
+    "precision": 0.875,
+    "recall": 0.4375,
+    "f1": 0.5833,
+    "fpr": 0.0027,
+    "pr_auc": 0.6477,
+    "roc_auc": 0.9264,
+    "confusion": {
+      "tn": 2184,
+      "fp": 6,
+      "fn": 54,
+      "tp": 42
+    },
+    "bootstrap": {
+      "f1_95ci": [
+        0.4776,
+        0.6714
+      ],
+      "pr_auc_95ci": [
+        0.5522,
+        0.7356
+      ],
+      "resamples_used": 1000
+    },
+    "base_rate_reweighted": {
+      "assumed_positive_rate": 0.05,
+      "precision": 0.8937,
+      "recall": 0.4375,
+      "fpr": 0.0027,
+      "false_alerts_per_1000_legitimate": 2.74,
+      "caveat": "Importance-weighted estimate under a prior-shift assumption: per-class score behaviour is assumed unchanged at the new base rate. Confirm with a real sample from the target population."
+    }
+  },
+  "error_counts_test": {
+    "false_positives_exported": 6,
+    "false_negatives_exported": 25
+  },
+  "external": {},
+  "top_features": {
+    "toward_positive_class": [
+      "assistant",
+      "link",
+      "using below",
+      "below link",
+      "apply using",
+      "data entry",
+      "earn",
+      "jobs",
+      "entered",
+      "with full",
+      "1000",
+      "entry",
+      "contact",
+      "subsea",
+      "oil and",
+      "no experience",
+      "reps",
+      "audit",
+      "money",
+      "office"
+    ],
+    "toward_negative_class": [
+      "team",
+      "end",
+      "we re",
+      "our",
+      "re",
+      "new",
+      "marketing",
+      "digital",
+      "you ll",
+      "specialist",
+      "growing",
+      "love",
+      "ll",
+      "the right",
+      "based",
+      "user",
+      "you will",
+      "is looking",
+      "web",
+      "creative"
+    ]
+  },
+  "environment": {
+    "python": "3.12.13",
+    "sklearn": "1.9.1",
+    "numpy": "1.26.2",
+    "pandas": "3.0.6",
+    "tldextract": "5.1.2"
+  },
+  "created_utc": "2026-10-13T11:23:10+00:00"
+}

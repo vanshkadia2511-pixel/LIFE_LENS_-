@@ -1,0 +1,444 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.5",
+  "serialNumber": "urn:uuid:b0d6146f-8bad-4e79-afc0-5c50758ea37b",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2026-10-12T13:05:07.119699+00:00",
+    "tools": [
+      {
+        "vendor": "LifeLens-Security",
+        "name": "CycloneDX-Generator",
+        "version": "2.0.0"
+      }
+    ],
+    "component": {
+      "type": "application",
+      "name": "LifeLens-Omega",
+      "version": "2.0.0",
+      "description": "Reality Integrity Intelligence & Offer Verification Platform"
+    }
+  },
+  "components": [
+    {
+      "type": "library",
+      "bom-ref": "pkg:pypi/fastapi@0.104.1",
+      "name": "fastapi",
+      "version": "0.104.1",
+      "purl": "pkg:pypi/fastapi@0.104.1",
+      "licenses": [
+        {
+          "license": {
+            "id": "Standard-Open-Source"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:pypi/uvicorn@0.24.0",
+      "name": "uvicorn",
+      "version": "0.24.0",
+      "purl": "pkg:pypi/uvicorn@0.24.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "Standard-Open-Source"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:pypi/sqlalchemy@2.0.23",
+      "name": "sqlalchemy",
+      "version": "2.0.23",
+      "purl": "pkg:pypi/sqlalchemy@2.0.23",
+      "licenses": [
+        {
+          "license": {
+            "id": "Standard-Open-Source"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:pypi/psycopg2-binary@2.9.9",
+      "name": "psycopg2-binary",
+      "version": "2.9.9",
+      "purl": "pkg:pypi/psycopg2-binary@2.9.9",
+      "licenses": [
+        {
+          "license": {
+            "id": "Standard-Open-Source"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:pypi/pydantic@2.5.0",
+      "name": "pydantic",
+      "version": "2.5.0",
+      "purl": "pkg:pypi/pydantic@2.5.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "Standard-Open-Source"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:pypi/pydantic-settings@2.1.0",
+      "name": "pydantic-settings",
+      "version": "2.1.0",
+      "purl": "pkg:pypi/pydantic-settings@2.1.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "Standard-Open-Source"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:pypi/python-dotenv@1.0.0",
+      "name": "python-dotenv",
+      "version": "1.0.0",
+      "purl": "pkg:pypi/python-dotenv@1.0.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "Standard-Open-Source"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:pypi/numpy@1.26.2",
+      "name": "numpy",
+      "version": "1.26.2",
+      "purl": "pkg:pypi/numpy@1.26.2",
+      "licenses": [
+        {
+          "license": {
+            "id": "Standard-Open-Source"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:pypi/scipy@1.11.4",
+      "name": "scipy",
+      "version": "1.11.4",
+      "purl": "pkg:pypi/scipy@1.11.4",
+      "licenses": [
+        {
+          "license": {
+            "id": "Standard-Open-Source"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:pypi/redis@5.0.1",
+      "name": "redis",
+      "version": "5.0.1",
+      "purl": "pkg:pypi/redis@5.0.1",
+      "licenses": [
+        {
+          "license": {
+            "id": "Standard-Open-Source"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:pypi/cryptography@41.0.7",
+      "name": "cryptography",
+      "version": "41.0.7",
+      "purl": "pkg:pypi/cryptography@41.0.7",
+      "licenses": [
+        {
+          "license": {
+            "id": "Standard-Open-Source"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:pypi/python-jose@3.3.0",
+      "name": "python-jose",
+      "version": "3.3.0",
+      "purl": "pkg:pypi/python-jose@3.3.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "Standard-Open-Source"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:pypi/passlib@1.7.4",
+      "name": "passlib",
+      "version": "1.7.4",
+      "purl": "pkg:pypi/passlib@1.7.4",
+      "licenses": [
+        {
+          "license": {
+            "id": "Standard-Open-Source"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:pypi/python-multipart@0.0.6",
+      "name": "python-multipart",
+      "version": "0.0.6",
+      "purl": "pkg:pypi/python-multipart@0.0.6",
+      "licenses": [
+        {
+          "license": {
+            "id": "Standard-Open-Source"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:pypi/httpx@0.25.2",
+      "name": "httpx",
+      "version": "0.25.2",
+      "purl": "pkg:pypi/httpx@0.25.2",
+      "licenses": [
+        {
+          "license": {
+            "id": "Standard-Open-Source"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:pypi/prometheus-client@0.19.0",
+      "name": "prometheus-client",
+      "version": "0.19.0",
+      "purl": "pkg:pypi/prometheus-client@0.19.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "Standard-Open-Source"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:pypi/structlog@23.2.0",
+      "name": "structlog",
+      "version": "23.2.0",
+      "purl": "pkg:pypi/structlog@23.2.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "Standard-Open-Source"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:pypi/tenacity@8.2.3",
+      "name": "tenacity",
+      "version": "8.2.3",
+      "purl": "pkg:pypi/tenacity@8.2.3",
+      "licenses": [
+        {
+          "license": {
+            "id": "Standard-Open-Source"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:pypi/pyyaml@6.0.3",
+      "name": "pyyaml",
+      "version": "6.0.3",
+      "purl": "pkg:pypi/pyyaml@6.0.3",
+      "licenses": [
+        {
+          "license": {
+            "id": "Standard-Open-Source"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:pypi/joblib@1.6.0",
+      "name": "joblib",
+      "version": "1.6.0",
+      "purl": "pkg:pypi/joblib@1.6.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "Standard-Open-Source"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:pypi/scikit-learn@1.9.1",
+      "name": "scikit-learn",
+      "version": "1.9.1",
+      "purl": "pkg:pypi/scikit-learn@1.9.1",
+      "licenses": [
+        {
+          "license": {
+            "id": "Standard-Open-Source"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:pypi/pandas@3.0.6",
+      "name": "pandas",
+      "version": "3.0.6",
+      "purl": "pkg:pypi/pandas@3.0.6",
+      "licenses": [
+        {
+          "license": {
+            "id": "Standard-Open-Source"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:pypi/pytest@7.4.3",
+      "name": "pytest",
+      "version": "7.4.3",
+      "purl": "pkg:pypi/pytest@7.4.3",
+      "licenses": [
+        {
+          "license": {
+            "id": "Standard-Open-Source"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:pypi/pytest-asyncio@0.21.1",
+      "name": "pytest-asyncio",
+      "version": "0.21.1",
+      "purl": "pkg:pypi/pytest-asyncio@0.21.1",
+      "licenses": [
+        {
+          "license": {
+            "id": "Standard-Open-Source"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:pypi/pytest-cov@4.1.0",
+      "name": "pytest-cov",
+      "version": "4.1.0",
+      "purl": "pkg:pypi/pytest-cov@4.1.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "Standard-Open-Source"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:pypi/httpx@0.25.2",
+      "name": "httpx",
+      "version": "0.25.2",
+      "purl": "pkg:pypi/httpx@0.25.2",
+      "licenses": [
+        {
+          "license": {
+            "id": "Standard-Open-Source"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:pypi/black@23.11.0",
+      "name": "black",
+      "version": "23.11.0",
+      "purl": "pkg:pypi/black@23.11.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "Standard-Open-Source"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:pypi/isort@5.12.0",
+      "name": "isort",
+      "version": "5.12.0",
+      "purl": "pkg:pypi/isort@5.12.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "Standard-Open-Source"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:pypi/flake8@6.1.0",
+      "name": "flake8",
+      "version": "6.1.0",
+      "purl": "pkg:pypi/flake8@6.1.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "Standard-Open-Source"
+          }
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:pypi/mypy@1.7.1",
+      "name": "mypy",
+      "version": "1.7.1",
+      "purl": "pkg:pypi/mypy@1.7.1",
+      "licenses": [
+        {
+          "license": {
+            "id": "Standard-Open-Source"
+          }
+        }
+      ]
+    }
+  ]
+}

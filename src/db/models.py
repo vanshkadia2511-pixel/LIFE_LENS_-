@@ -7,32 +7,50 @@ from sqlalchemy import (
     create_engine, Column, String, Float, Integer, DateTime,
     Boolean, Text, ForeignKey, Enum as SQLEnum, JSON, Index
 )
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker, relationship, Session
+from sqlalchemy.orm import declarative_base, sessionmaker, relationship, Session
 from typing import Optional, List
-from datetime import datetime
+from datetime import datetime, timezone
 from enum import Enum
 import os
 import logging
 
 logger = logging.getLogger(__name__)
 
+
+def get_utc_now() -> datetime:
+    return datetime.now(timezone.utc)
+
 # ============================================================================
 # DATABASE SETUP
 # ============================================================================
 
-DATABASE_URL = os.getenv(
-    "DATABASE_URL",
-    "postgresql://lifelens:password@localhost:5432/lifelens_db"
-)
+DATABASE_URL = os.getenv("DATABASE_URL")
 
-engine = create_engine(
-    DATABASE_URL,
-    echo=False,
-    pool_size=20,
-    max_overflow=40,
-    pool_pre_ping=True,
-)
+# Check if psycopg2 driver is available
+psycopg2_available = True
+try:
+    import psycopg2  # noqa: F401
+except ImportError:
+    psycopg2_available = False
+
+if not DATABASE_URL or not psycopg2_available:
+    # Fallback to SQLite locally if Postgres driver is not installed or url is missing
+    DATABASE_URL = "sqlite:///./lifelens.db"
+    logger.info("Using SQLite database fallback (psycopg2 not available or DATABASE_URL unset)")
+
+engine_args = {
+    "echo": False,
+    "pool_pre_ping": True,
+}
+
+if "postgresql" in DATABASE_URL:
+    engine_args["pool_size"] = 20
+    engine_args["max_overflow"] = 40
+else:
+    # SQLite-specific arguments
+    engine_args["connect_args"] = {"check_same_thread": False}
+
+engine = create_engine(DATABASE_URL, **engine_args)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
@@ -80,8 +98,8 @@ class UserModel(Base):
     user_id = Column(String(36), primary_key=True)
     email = Column(String(255), unique=True, nullable=False, index=True)
     phone = Column(String(20), nullable=True)
-    created_at = Column(DateTime, default=datetime.utcnow, index=True)
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = Column(DateTime, default=get_utc_now, index=True)
+    updated_at = Column(DateTime, default=get_utc_now, onupdate=get_utc_now)
 
     # Privacy Settings
     consent_analysis = Column(Boolean, default=False)
@@ -144,10 +162,10 @@ class EntityModel(Base):
     prior_incidents = Column(JSON, default=list)
 
     # Timestamps
-    first_contact_at = Column(DateTime, default=datetime.utcnow)
-    last_contact_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
-    created_at = Column(DateTime, default=datetime.utcnow)
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    first_contact_at = Column(DateTime, default=get_utc_now)
+    last_contact_at = Column(DateTime, default=get_utc_now, onupdate=get_utc_now)
+    created_at = Column(DateTime, default=get_utc_now)
+    updated_at = Column(DateTime, default=get_utc_now, onupdate=get_utc_now)
 
     # Relationships
     user = relationship("UserModel", back_populates="entities")
@@ -200,8 +218,8 @@ class BaselineModel(Base):
     days_of_data = Column(Integer, default=0)
     confidence = Column(Float, default=0.0)
 
-    created_at = Column(DateTime, default=datetime.utcnow)
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = Column(DateTime, default=get_utc_now)
+    updated_at = Column(DateTime, default=get_utc_now, onupdate=get_utc_now)
 
     # Relationships
     entity = relationship("EntityModel", back_populates="baseline")
@@ -219,7 +237,7 @@ class EventModel(Base):
 
     # Event Details
     event_type = Column(SQLEnum(EventTypeEnum), nullable=False, index=True)
-    timestamp = Column(DateTime, default=datetime.utcnow, nullable=False, index=True)
+    timestamp = Column(DateTime, default=get_utc_now, nullable=False, index=True)
     source_channel = Column(String(50), nullable=False)
 
     # Content
@@ -235,7 +253,7 @@ class EventModel(Base):
     user_approved_analysis = Column(Boolean, default=False)
     user_approved_learning = Column(Boolean, default=False)
 
-    created_at = Column(DateTime, default=datetime.utcnow)
+    created_at = Column(DateTime, default=get_utc_now)
     deleted_at = Column(DateTime, nullable=True)
 
     # Relationships
@@ -297,8 +315,8 @@ class AssessmentModel(Base):
     actual_outcome = Column(String(100), nullable=True)
     outcome_confidence = Column(Float, nullable=True)
 
-    created_at = Column(DateTime, default=datetime.utcnow, index=True)
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = Column(DateTime, default=get_utc_now, index=True)
+    updated_at = Column(DateTime, default=get_utc_now, onupdate=get_utc_now)
 
     # Relationships
     event = relationship("EventModel", back_populates="assessment")
@@ -331,7 +349,7 @@ class AuditLogModel(Base):
     ip_address = Column(String(45), nullable=True)
     user_agent = Column(String(500), nullable=True)
 
-    created_at = Column(DateTime, default=datetime.utcnow, index=True)
+    created_at = Column(DateTime, default=get_utc_now, index=True)
 
     __table_args__ = (
         Index('idx_audit_user_created', 'user_id', 'created_at'),

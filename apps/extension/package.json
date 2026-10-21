@@ -1,0 +1,13 @@
+{
+  "name": "@lifelens/extension",
+  "version": "1.0.0",
+  "description": "LifeLens Ω Chrome Extension for Job and Recruiter Verification",
+  "private": true,
+  "scripts": {
+    "dev": "echo 'Extension ready in apps/extension'",
+    "build": "echo 'Extension ready in apps/extension'"
+  },
+  "keywords": ["lifelens", "verification", "cect", "security", "chrome-extension"],
+  "author": "LifeLens Team",
+  "license": "MIT"
+}

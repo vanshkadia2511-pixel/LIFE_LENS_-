@@ -30,9 +30,10 @@ ENV/
 .env.local
 .env.production
 
-# IDE
+# IDE & Tooling
 .idea/
 .vscode/
+.trunk/
 *.swp
 *.swo
 

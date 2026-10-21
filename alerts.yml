@@ -1,0 +1,42 @@
+groups:
+  - name: lifelens_alerts
+    interval: 30s
+    rules:
+      # API Health
+      - alert: APIDown
+        expr: up{job="lifelens-api"} == 0
+        for: 2m
+        annotations:
+          summary: "LifeLens API is down"
+          description: "LifeLens API container is unreachable for more than 2 minutes."
+          
+      - alert: HighErrorRate
+        expr: rate(lifelens_request_errors_total[5m]) > 0.05
+        for: 5m
+        annotations:
+          summary: "High error rate detected"
+          description: "API is experiencing an error rate of {{ $value | humanizePercentage }} over the last 5 minutes."
+
+      # Performance
+      - alert: HighLatency
+        expr: histogram_quantile(0.95, lifelens_request_duration_seconds) > 1.0
+        for: 5m
+        annotations:
+          summary: "API latency is high"
+          description: "API p95 latency is {{ $value }}s over the last 5 minutes."
+
+      # Database
+      - alert: DatabaseConnectionPoolExhausted
+        expr: lifelens_db_pool_usage > 0.9
+        for: 5m
+        annotations:
+          summary: "Database connection pool usage is high"
+          description: "Database connection pool usage is {{ $value | humanizePercentage }}."
+
+      # Resource Usage
+      - alert: HighMemoryUsage
+        expr: process_resident_memory_bytes > 512 * 1024 * 1024
+        for: 5m
+        annotations:
+          summary: "High memory usage"
+          description: "Container memory usage is {{ humanize $value }}."

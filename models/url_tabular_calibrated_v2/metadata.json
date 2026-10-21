@@ -1,0 +1,163 @@
+{
+  "label": "MEASURED",
+  "dataset_file": "datasets/phishing_urls/compphish/all_features_threshold90.csv",
+  "dataset_sha256": "2ae569c2d2abff08b24a66099b466a21423f55d3c823e45ac5362f22337492c6",
+  "rows_after_cleaning": 15351,
+  "positive_rate": 0.4688,
+  "split": {
+    "method": "StratifiedGroupKFold(5, shuffle, seed=42); fold0=test, fold1=validation, folds2-4=train",
+    "group_method": "registered_domain",
+    "domain_extractor": "tldextract-5.1.2 (suffix_list_urls=())",
+    "groups": 9446,
+    "sizes": {
+      "train": 9213,
+      "validation": 3068,
+      "test": 3070
+    }
+  },
+  "features": {
+    "n_features": 70,
+    "feature_names": [
+      "brand_subdomain",
+      "brand_substring_domain",
+      "brand_typo_dom",
+      "fake_tld",
+      "brand_in_path_query",
+      "dots_path",
+      "url_more_than_mean",
+      "domain_more_than_mean",
+      "gibberish",
+      "domain_length",
+      "url_length",
+      "url_contains_ip",
+      "presence_of_shortened_url_targeturl",
+      "special_characters_count",
+      "no_of_at",
+      "no_of_comma",
+      "no_of_dollar",
+      "no_of_semicolon",
+      "no_of_space",
+      "no_of_ampersand",
+      "no_of_dots",
+      "no_of_equal",
+      "no_of_percent",
+      "no_of_underscore",
+      "no_of_hyphen",
+      "no_of_questionmark",
+      "no_of_colon",
+      "no_of_slashes_inpath",
+      "has_asterisk",
+      "has_or",
+      "has_embedded_url",
+      "uses_https",
+      "num_query_params",
+      "numeric_proportion",
+      "url_entropy",
+      "hostname_digit_ratio",
+      "has_redirections",
+      "has_punycode",
+      "count_www",
+      "count_com",
+      "url_contains_risky_extension",
+      "has_explicit_port",
+      "total_words_url",
+      "average_length_of_words",
+      "longest_word_length",
+      "shortest_word_length",
+      "presence_of_free_hosting",
+      "no_of_forms",
+      "no_of_Images",
+      "no_of_hyperlinks",
+      "no_of_external_links",
+      "no_of_internal_links",
+      "no_of_null_links",
+      "no_of_selfreference_links",
+      "no_of_empty_links",
+      "RatioOfEmptyLinksToExternalLinks",
+      "htmlcontent_contains_risky_extensions",
+      "presence_of_shorten_url_html",
+      "hidden_elements_html",
+      "is_script_loaded_from_external_domain",
+      "suspicious_inline_js",
+      "is_footer_mismatch",
+      "is_header_mismatch",
+      "is_copyright_mismatch",
+      "is_socials_mismatch",
+      "is_favicon_mismatch",
+      "has_missing_title",
+      "title_mismatch_with_domain",
+      "has_inline_event_handlers",
+      "form_action_external"
+    ]
+  },
+  "calibration": "CalibratedClassifierCV(cv=5)",
+  "tuning": {
+    "l2_grid": [
+      {
+        "l2_regularization": 0.0,
+        "val_pr_auc": 0.9926
+      },
+      {
+        "l2_regularization": 1.0,
+        "val_pr_auc": 0.9928
+      },
+      {
+        "l2_regularization": 10.0,
+        "val_pr_auc": 0.9919
+      }
+    ],
+    "chosen_l2": 1.0
+  },
+  "threshold": {
+    "threshold": 0.14591529294195663,
+    "val_precision": 0.9002,
+    "val_recall": 0.991
+  },
+  "test_metrics": {
+    "n": 3070,
+    "positives": 1439,
+    "threshold": 0.1459,
+    "precision": 0.903,
+    "recall": 0.9896,
+    "f1": 0.9443,
+    "fpr": 0.0938,
+    "pr_auc": 0.9962,
+    "roc_auc": 0.9964,
+    "confusion": {
+      "tn": 1478,
+      "fp": 153,
+      "fn": 15,
+      "tp": 1424
+    },
+    "bootstrap": {
+      "f1_95ci": [
+        0.9356,
+        0.9524
+      ],
+      "pr_auc_95ci": [
+        0.9948,
+        0.9975
+      ],
+      "resamples_used": 1000
+    },
+    "base_rate_reweighted": {
+      "assumed_positive_rate": 0.05,
+      "precision": 0.357,
+      "recall": 0.9896,
+      "fpr": 0.0938,
+      "false_alerts_per_1000_legitimate": 93.81,
+      "caveat": "Importance-weighted estimate under a prior-shift assumption: per-class score behaviour is assumed unchanged at the new base rate. Confirm with a real sample from the target population."
+    }
+  },
+  "error_counts_test": {
+    "false_positives_exported": 25,
+    "false_negatives_exported": 15
+  },
+  "environment": {
+    "python": "3.12.13",
+    "sklearn": "1.9.1",
+    "numpy": "1.26.2",
+    "pandas": "3.0.6"
+  },
+  "created_utc": "2026-10-13T11:08:25+00:00"
+}

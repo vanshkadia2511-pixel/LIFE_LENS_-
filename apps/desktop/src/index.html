@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LifeLens Ω — Desktop Call Guard</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="hud-container">
+    <!-- Top HUD Bar -->
+    <header class="hud-header">
+      <div class="header-left">
+        <span class="hud-stamp">LIFELENS Ω</span>
+        <h1 class="hud-title">Desktop Call Guard</h1>
+      </div>
+      <div class="header-right">
+        <span id="guardBadge" class="guard-pill pill-off">GUARD IS OFF</span>
+      </div>
+    </header>
+
+    <!-- Session Control Card -->
+    <section class="control-card" id="controlCard">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="platformSelect">Active Call Platform</label>
+          <select id="platformSelect">
+            <option value="zoom">Zoom</option>
+            <option value="meet">Google Meet</option>
+            <option value="teams">Microsoft Teams</option>
+            <option value="whatsapp_desktop">WhatsApp Desktop / Web</option>
+            <option value="telegram">Telegram Call</option>
+            <option value="webex">Cisco Webex</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="consent-row">
+        <input type="checkbox" id="consentCheckbox">
+        <label for="consentCheckbox">
+          I consent to running local transcript monitoring on my machine (§P5 Privacy by default). No audio, video, or screenshots are ever stored or sent to a server.
+        </label>
+      </div>
+
+      <div class="action-buttons">
+        <button id="btnStartGuard" class="btn btn-start">🛡️ Turn Guard ON</button>
+        <button id="btnStopGuard" class="btn btn-stop hidden">🛑 Stop Guard (One-Click)</button>
+      </div>
+    </section>
+
+    <!-- Active Stream HUD -->
+    <section class="stream-card hidden" id="streamCard">
+      <div class="stream-header">
+        <span class="mono-label">LIVE TRANSCRIPT STREAM (IN-MEMORY ONLY)</span>
+        <span id="asrLatency" class="mono-latency">LATENCY: 0ms</span>
+      </div>
+      <div id="transcriptFeed" class="transcript-feed">
+        <div class="feed-placeholder">Listening via local faster-whisper ASR engine...</div>
+      </div>
+
+      <!-- Quick Test Injector for Demo/Testing -->
+      <div class="test-injector">
+        <label>Simulate phrase trigger (ILLUSTRATIVE):</label>
+        <div class="injector-buttons">
+          <button class="btn-chip" data-phrase="ILLUSTRATIVE: Transfer $1000 to this UPI ID right now.">Transfer Demand</button>
+          <button class="btn-chip" data-phrase="ILLUSTRATIVE: This is CBI officer, you are in digital arrest.">Digital Arrest</button>
+          <button class="btn-chip" data-phrase="ILLUSTRATIVE: Install AnyDesk to inspect your camera.">Remote Access</button>
+          <button class="btn-chip" data-phrase="ILLUSTRATIVE: Do not tell anyone or consult your family.">Secrecy Pressure</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Layer 4: Liveness Challenge Coach Bar -->
+    <section class="coach-bar hidden" id="coachBar">
+      <div class="coach-header">
+        <span class="mono-label">LAYER 4 • LIVENESS CHALLENGE COACH</span>
+        <button id="btnToggleCoach" class="btn-mini">View Challenges</button>
+      </div>
+      <div id="coachDrawer" class="coach-drawer hidden">
+        <p class="coach-guidance">
+          Challenge the caller with behavioral actions to expose neural face-swap glitches.
+          <em>The app never claims a pass/fail verdict — you observe and decide (§P6).</em>
+        </p>
+        <div id="challengesList" class="challenges-list"></div>
+      </div>
+    </section>
+
+    <!-- Layer 3: Out-of-Band Verification Interstitial Overlay -->
+    <div id="interstitialModal" class="interstitial-modal hidden">
+      <div class="interstitial-card">
+        <div class="stamp-alert">HIGH-RISK DETECTED</div>
+        <h2 class="interstitial-title">PAUSE IMMEDIATELY</h2>
+        <p class="interstitial-warning">
+          Do NOT pay, transfer funds, or provide passwords/OTP. A high-risk coercion or transfer demand was detected.
+        </p>
+
+        <div class="cooling-timer">
+          <div class="timer-label">PAYMENT COOLING-OFF WINDOW</div>
+          <div id="timerCountdown" class="timer-digits">15:00</div>
+          <div class="timer-sub">Take time to reflect. Fraudsters rely on manufactured urgency.</div>
+        </div>
+
+        <div class="checklist-section">
+          <h3>Independent Out-of-Band Verification Checklist</h3>
+          <ul id="checklistItems" class="checklist-items"></ul>
+        </div>
+
+        <div class="code-word-box">
+          <span class="code-word-label">SUGGESTED VERIFICATION CODE WORD:</span>
+          <span id="codeWordText" class="code-word-val">SHIELD-2026-ALPHA</span>
+        </div>
+
+        <div class="interstitial-actions">
+          <button id="btnDismissInterstitial" class="btn btn-secondary">I Have Verified Independently</button>
+          <button id="btnAbortCall" class="btn btn-danger">Hang Up Call Immediately</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Post-Call Receipt View -->
+    <section class="receipt-card hidden" id="receiptCard">
+      <div class="receipt-stamp">VERIFIED RECEIPT</div>
+      <h2 class="receipt-title">Post-Call Reality Receipt</h2>
+      <div class="receipt-meta">
+        <div>Session ID: <span id="receiptSessionId" class="mono">--</span></div>
+        <div>Duration: <span id="receiptDuration" class="mono">--</span></div>
+      </div>
+
+      <div class="receipt-block">
+        <h3>Fired Risk Signals</h3>
+        <div id="receiptSignals" class="receipt-signals"></div>
+      </div>
+
+      <div class="receipt-block">
+        <h3>Completed Verification Steps</h3>
+        <ul id="receiptSteps" class="receipt-steps"></ul>
+      </div>
+
+      <div class="receipt-block">
+        <div class="ledger-hash-label">TRUST INTEGRITY LEDGER HASH (§P3)</div>
+        <div id="receiptLedgerHash" class="mono-hash">0x0000000000000000000000000000000000000000000000000000000000000000</div>
+      </div>
+
+      <div class="receipt-footer">
+        Zero raw audio or video was persisted. Transcript purged from memory.
+      </div>
+
+      <button id="btnNewSession" class="btn btn-primary" style="margin-top:14px; width:100%;">New Protected Session</button>
+    </section>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
