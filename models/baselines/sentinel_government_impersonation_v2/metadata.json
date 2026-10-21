@@ -1,0 +1,145 @@
+{
+  "label": "MEASURED",
+  "dataset_file": "datasets/job_scam_text/indian_scam_multiclass/sentinel_dataset_multiclass.csv",
+  "dataset_sha256": "ebdec640f5d81a0e368aa6607579aad963881c57e16be4719b9791f581441d1d",
+  "rows_after_cleaning": 14000,
+  "positive_rate": 0.2075,
+  "split": {
+    "method": "StratifiedGroupKFold(5, shuffle, seed=42); fold0=test, fold1=validation, folds2-4=train",
+    "near_duplicate_threshold": 0.9,
+    "group_col": null,
+    "domain_extractor": null,
+    "groups": 8156,
+    "sizes": {
+      "train": 8398,
+      "validation": 2800,
+      "test": 2802
+    }
+  },
+  "features": {
+    "analyzer": "word",
+    "ngram_range": [
+      1,
+      2
+    ],
+    "max_features": 50000
+  },
+  "calibration": "none",
+  "tuning": {
+    "c_grid": [
+      {
+        "C": 0.1,
+        "val_pr_auc": 0.9722
+      },
+      {
+        "C": 1.0,
+        "val_pr_auc": 0.9835
+      },
+      {
+        "C": 10.0,
+        "val_pr_auc": 0.9836
+      }
+    ],
+    "chosen_C": 10.0
+  },
+  "threshold": {
+    "threshold": 0.6005888969626372,
+    "val_precision": 0.9007,
+    "val_recall": 0.9053
+  },
+  "test_metrics": {
+    "n": 2802,
+    "positives": 582,
+    "threshold": 0.6006,
+    "precision": 0.9291,
+    "recall": 0.9003,
+    "f1": 0.9145,
+    "fpr": 0.018,
+    "pr_auc": 0.9407,
+    "roc_auc": 0.9601,
+    "confusion": {
+      "tn": 2180,
+      "fp": 40,
+      "fn": 58,
+      "tp": 524
+    },
+    "bootstrap": {
+      "f1_95ci": [
+        0.8952,
+        0.9307
+      ],
+      "pr_auc_95ci": [
+        0.9239,
+        0.9568
+      ],
+      "resamples_used": 1000
+    },
+    "base_rate_reweighted": {
+      "assumed_positive_rate": 0.05,
+      "precision": 0.7245,
+      "recall": 0.9003,
+      "fpr": 0.018,
+      "false_alerts_per_1000_legitimate": 18.02,
+      "caveat": "Importance-weighted estimate under a prior-shift assumption: per-class score behaviour is assumed unchanged at the new base rate. Confirm with a real sample from the target population."
+    }
+  },
+  "error_counts_test": {
+    "false_positives_exported": 25,
+    "false_negatives_exported": 25
+  },
+  "external": {},
+  "top_features": {
+    "toward_positive_class": [
+      "cybercrime",
+      "narcotics",
+      "trafficking",
+      "cbi",
+      "trai",
+      "your passport",
+      "passport",
+      "first",
+      "pan card",
+      "your pan",
+      "pan",
+      "money laundering",
+      "laundering",
+      "money",
+      "per",
+      "si",
+      "dcp",
+      "case",
+      "arrest",
+      "your voter"
+    ],
+    "toward_negative_class": [
+      "bank",
+      "of rs",
+      "india",
+      "hdfc",
+      "federal",
+      "otp",
+      "india security",
+      "of india",
+      "federal bank",
+      "canara",
+      "rs",
+      "hdfc bank",
+      "from cyber",
+      "axis",
+      "of",
+      "at",
+      "days",
+      "operations deputy",
+      "from ncb",
+      "app"
+    ]
+  },
+  "environment": {
+    "python": "3.12.13",
+    "sklearn": "1.9.1",
+    "numpy": "1.26.2",
+    "pandas": "3.0.6",
+    "tldextract": "5.1.2"
+  },
+  "created_utc": "2026-10-13T11:04:22+00:00"
+}

@@ -68,3 +68,23 @@ Thumbs.db
 # Extracted plan (not part of prod code)
 extracted_plan/
 files.zip
+Fraud-R1/
+
+# Datasets & large data files (Rule 5)
+datasets/**/*.jsonl
+datasets/**/*.csv
+datasets/**/*.tar*
+datasets/**/*.zip
+datasets/job_scam_text/
+datasets/phishing_urls/
+datasets/legitimate/
+datasets/scam/
+datasets/synthetic/
+datasets/company_registry_reference/
+
+# Large model binaries (>50MB or binary weights)
+*.joblib
+*.pkl
+*.bin
+*.onnx
+models/**/*.joblib

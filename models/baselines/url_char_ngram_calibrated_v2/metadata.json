@@ -1,0 +1,145 @@
+{
+  "label": "MEASURED",
+  "dataset_file": "datasets/phishing_urls/compphish/all_features_threshold90.csv",
+  "dataset_sha256": "2ae569c2d2abff08b24a66099b466a21423f55d3c823e45ac5362f22337492c6",
+  "rows_after_cleaning": 15351,
+  "positive_rate": 0.4688,
+  "split": {
+    "method": "StratifiedGroupKFold(5, shuffle, seed=42); fold0=test, fold1=validation, folds2-4=train",
+    "near_duplicate_threshold": null,
+    "group_col": "registered_domain",
+    "domain_extractor": "tldextract-5.1.2 (suffix_list_urls=())",
+    "groups": 9446,
+    "sizes": {
+      "train": 9213,
+      "validation": 3068,
+      "test": 3070
+    }
+  },
+  "features": {
+    "analyzer": "char_wb",
+    "ngram_range": [
+      3,
+      5
+    ],
+    "max_features": 50000
+  },
+  "calibration": "CalibratedClassifierCV(cv=5)",
+  "tuning": {
+    "c_grid": [
+      {
+        "C": 0.1,
+        "val_pr_auc": 0.9595
+      },
+      {
+        "C": 1.0,
+        "val_pr_auc": 0.9751
+      },
+      {
+        "C": 10.0,
+        "val_pr_auc": 0.9823
+      }
+    ],
+    "chosen_C": 10.0
+  },
+  "threshold": {
+    "threshold": 0.2009802207561119,
+    "val_precision": 0.9004,
+    "val_recall": 0.9492
+  },
+  "test_metrics": {
+    "n": 3070,
+    "positives": 1439,
+    "threshold": 0.201,
+    "precision": 0.892,
+    "recall": 0.9757,
+    "f1": 0.932,
+    "fpr": 0.1042,
+    "pr_auc": 0.9872,
+    "roc_auc": 0.9876,
+    "confusion": {
+      "tn": 1461,
+      "fp": 170,
+      "fn": 35,
+      "tp": 1404
+    },
+    "bootstrap": {
+      "f1_95ci": [
+        0.9232,
+        0.9411
+      ],
+      "pr_auc_95ci": [
+        0.9844,
+        0.9901
+      ],
+      "resamples_used": 1000
+    },
+    "base_rate_reweighted": {
+      "assumed_positive_rate": 0.05,
+      "precision": 0.3301,
+      "recall": 0.9757,
+      "fpr": 0.1042,
+      "false_alerts_per_1000_legitimate": 104.23,
+      "caveat": "Importance-weighted estimate under a prior-shift assumption: per-class score behaviour is assumed unchanged at the new base rate. Confirm with a real sample from the target population."
+    }
+  },
+  "error_counts_test": {
+    "false_positives_exported": 25,
+    "false_negatives_exported": 25
+  },
+  "external": {},
+  "top_features": {
+    "toward_positive_class": [
+      ".we",
+      "app",
+      "site",
+      "ebl",
+      "365",
+      "bly",
+      "weeb",
+      ".wee",
+      ".weeb",
+      "weebl",
+      "eebl",
+      "eebly",
+      "ebly",
+      "eeb",
+      "sit",
+      "wee",
+      "ite",
+      "-co",
+      "bly.",
+      "bly.c"
+    ],
+    "toward_negative_class": [
+      "om/ ",
+      "com/ ",
+      "m/ ",
+      "s://w",
+      "r/ ",
+      "tps",
+      "ttps",
+      "https",
+      "s:/",
+      "ps://",
+      "ps:/",
+      "tps:/",
+      "s://",
+      "ps:",
+      "ttps:",
+      "tps:",
+      "o/ ",
+      " ht",
+      " htt",
+      " http"
+    ]
+  },
+  "environment": {
+    "python": "3.12.13",
+    "sklearn": "1.9.1",
+    "numpy": "1.26.2",
+    "pandas": "3.0.6",
+    "tldextract": "5.1.2"
+  },
+  "created_utc": "2026-10-13T11:06:07+00:00"
+}

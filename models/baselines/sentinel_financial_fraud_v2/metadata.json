@@ -1,0 +1,145 @@
+{
+  "label": "MEASURED",
+  "dataset_file": "datasets/job_scam_text/indian_scam_multiclass/sentinel_dataset_multiclass.csv",
+  "dataset_sha256": "ebdec640f5d81a0e368aa6607579aad963881c57e16be4719b9791f581441d1d",
+  "rows_after_cleaning": 14000,
+  "positive_rate": 0.22,
+  "split": {
+    "method": "StratifiedGroupKFold(5, shuffle, seed=42); fold0=test, fold1=validation, folds2-4=train",
+    "near_duplicate_threshold": 0.9,
+    "group_col": null,
+    "domain_extractor": null,
+    "groups": 8156,
+    "sizes": {
+      "train": 8401,
+      "validation": 2799,
+      "test": 2800
+    }
+  },
+  "features": {
+    "analyzer": "word",
+    "ngram_range": [
+      1,
+      2
+    ],
+    "max_features": 50000
+  },
+  "calibration": "none",
+  "tuning": {
+    "c_grid": [
+      {
+        "C": 0.1,
+        "val_pr_auc": 0.9254
+      },
+      {
+        "C": 1.0,
+        "val_pr_auc": 0.946
+      },
+      {
+        "C": 10.0,
+        "val_pr_auc": 0.9559
+      }
+    ],
+    "chosen_C": 10.0
+  },
+  "threshold": {
+    "threshold": 0.8165269364763993,
+    "val_precision": 0.9004,
+    "val_recall": 0.7922
+  },
+  "test_metrics": {
+    "n": 2800,
+    "positives": 616,
+    "threshold": 0.8165,
+    "precision": 0.9981,
+    "recall": 0.8328,
+    "f1": 0.908,
+    "fpr": 0.0005,
+    "pr_auc": 0.9927,
+    "roc_auc": 0.9979,
+    "confusion": {
+      "tn": 2183,
+      "fp": 1,
+      "fn": 103,
+      "tp": 513
+    },
+    "bootstrap": {
+      "f1_95ci": [
+        0.8904,
+        0.9241
+      ],
+      "pr_auc_95ci": [
+        0.9896,
+        0.9951
+      ],
+      "resamples_used": 1000
+    },
+    "base_rate_reweighted": {
+      "assumed_positive_rate": 0.05,
+      "precision": 0.9897,
+      "recall": 0.8328,
+      "fpr": 0.0005,
+      "false_alerts_per_1000_legitimate": 0.46,
+      "caveat": "Importance-weighted estimate under a prior-shift assumption: per-class score behaviour is assumed unchanged at the new base rate. Confirm with a real sample from the target population."
+    }
+  },
+  "error_counts_test": {
+    "false_positives_exported": 1,
+    "false_negatives_exported": 25
+  },
+  "external": {},
+  "top_features": {
+    "toward_positive_class": [
+      "000",
+      "pnb",
+      "our",
+      "interpol",
+      "at pnb",
+      "link",
+      "pnb transaction",
+      "from ncb",
+      "fee",
+      "rs",
+      "lakh",
+      "customs",
+      "ncb",
+      "receive",
+      "pnb visa",
+      "pnb fraud",
+      "selected",
+      "reward",
+      "pnb card",
+      "fee of"
+    ],
+    "toward_negative_class": [
+      "bank",
+      "cybercrime",
+      "trafficking",
+      "narcotics",
+      "passport",
+      "your passport",
+      "pan",
+      "your pan",
+      "pan card",
+      "si",
+      "laundering",
+      "money laundering",
+      "your voter",
+      "cbi",
+      "trai",
+      "sub inspector",
+      "sub",
+      "otp",
+      "dcp",
+      "arrest"
+    ]
+  },
+  "environment": {
+    "python": "3.12.13",
+    "sklearn": "1.9.1",
+    "numpy": "1.26.2",
+    "pandas": "3.0.6",
+    "tldextract": "5.1.2"
+  },
+  "created_utc": "2026-10-13T11:03:57+00:00"
+}

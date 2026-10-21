@@ -1,0 +1,142 @@
+{
+  "label": "MEASURED",
+  "dataset_file": "datasets/job_scam_text/indian_scam_multiclass/sentinel_dataset_multiclass.csv",
+  "dataset_sha256": "ebdec640f5d81a0e368aa6607579aad963881c57e16be4719b9791f581441d1d",
+  "rows_after_cleaning": 14000,
+  "positive_rate": 0.6,
+  "split": {
+    "method": "StratifiedGroupKFold(5, shuffle, seed=42); fold0=test, fold1=validation, folds2-4=train",
+    "near_duplicate_threshold": 0.9,
+    "group_col": null,
+    "groups": 8156,
+    "sizes": {
+      "train": 8400,
+      "validation": 2800,
+      "test": 2800
+    }
+  },
+  "features": {
+    "analyzer": "word",
+    "ngram_range": [
+      1,
+      2
+    ],
+    "max_features": 50000
+  },
+  "tuning": {
+    "c_grid": [
+      {
+        "C": 0.1,
+        "val_pr_auc": 1.0
+      },
+      {
+        "C": 1.0,
+        "val_pr_auc": 1.0
+      },
+      {
+        "C": 10.0,
+        "val_pr_auc": 1.0
+      }
+    ],
+    "chosen_C": 1.0
+  },
+  "threshold": {
+    "threshold": 0.07955418143720293,
+    "val_precision": 0.9003,
+    "val_recall": 1.0
+  },
+  "test_metrics": {
+    "n": 2800,
+    "positives": 1680,
+    "threshold": 0.0796,
+    "precision": 0.875,
+    "recall": 1.0,
+    "f1": 0.9333,
+    "fpr": 0.2143,
+    "pr_auc": 1.0,
+    "roc_auc": 1.0,
+    "confusion": {
+      "tn": 880,
+      "fp": 240,
+      "fn": 0,
+      "tp": 1680
+    },
+    "bootstrap": {
+      "f1_95ci": [
+        0.9247,
+        0.9415
+      ],
+      "pr_auc_95ci": [
+        1.0,
+        1.0
+      ],
+      "resamples_used": 1000
+    },
+    "base_rate_reweighted": {
+      "assumed_positive_rate": 0.05,
+      "precision": 0.1972,
+      "recall": 1.0,
+      "fpr": 0.2143,
+      "false_alerts_per_1000_legitimate": 214.29,
+      "caveat": "Importance-weighted estimate under a prior-shift assumption: per-class score behaviour is assumed unchanged at the new base rate. Confirm with a real sample from the target population."
+    }
+  },
+  "error_counts_test": {
+    "false_positives_exported": 25,
+    "false_negatives_exported": 0
+  },
+  "external": {},
+  "top_features": {
+    "toward_positive_class": [
+      "000",
+      "have",
+      "to",
+      "pay rs",
+      "and",
+      "our",
+      "lakh",
+      "receive",
+      "kyc",
+      "fraud",
+      "this is",
+      "your account",
+      "fee",
+      "in",
+      "rs lakh",
+      "net",
+      "verify",
+      "we",
+      "it",
+      "case"
+    ],
+    "toward_negative_class": [
+      "for",
+      "app",
+      "may",
+      "otp",
+      "2026",
+      "successfully",
+      "order",
+      "days",
+      "may 2026",
+      "thank you",
+      "thank",
+      "balance",
+      "bank",
+      "ref",
+      "credited to",
+      "debited",
+      "credited",
+      "rs rs",
+      "valid",
+      "via"
+    ]
+  },
+  "environment": {
+    "python": "3.12.13",
+    "sklearn": "1.9.1",
+    "numpy": "1.26.2",
+    "pandas": "3.0.6"
+  },
+  "created_utc": "2026-10-13T10:35:38+00:00"
+}
